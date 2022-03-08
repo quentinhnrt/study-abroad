@@ -12,7 +12,12 @@ routes
   })
 
   .get("/articles", (req, res) => {
-    db.all("select * from article", (err, rows) => res.json(rows));
+    console.log(req.query.title);
+    if (req.query.title != "") {
+      db.all(`select * from article WHERE title LIKE %${req.query.title}%`, (err, rows) => res.json(rows));
+    } else {
+      db.all(`select * from article`, (err, rows) => res.json(rows));
+    }
   })
 
   .post("/articles/new", (req, res) => {
