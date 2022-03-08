@@ -27,9 +27,14 @@ routes
   })
 
   .post("/articles/new", (req, res) => {
-    req.files.thumbnail.mv(`./media/${req.files.thumbnail.name}`);
+    req.files.thumbnail.mv(`./thumbnail/${req.files.thumbnail.name}`);
+    req.files.media.mv(`./media/${req.files.media.name}`);
 
-    let query = `insert into article (title, content, thumbnailURL, mediaType, mediaURL, leadStory)  values ('${req.body.title}', '${req.body.content}', '${req.files.thumbnail.name}', '${req.files.thumbnail.mimetype}', '${req.files.thumbnail.name}', NULL)`;
+    let query = `insert into article (title, content, thumbnailURL, mediaType, mediaURL, leadStory)  values ('${req.body.title}', '${req.body.content}', '${req.files.thumbnail.name}', '${req.files.media.mimetype}', '${req.files.media.name}', NULL)`;
 
     db.run(query);
+  })
+
+  .delete("/articles/delete/:id", (req, res) => {
+    db.run(`delete from article where id=${req.params.id}`);
   });
