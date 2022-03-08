@@ -5,10 +5,13 @@ export default function NewArticle() {
   const [thumbnail, setThumbnail] = useState([]);
   const [media, setMedia] = useState([]);
 
+
   let postArticle = (e) => {
     e.preventDefault();
     let title = document.getElementById("title").value;
     let content = document.getElementById("content").value;
+    let thumbnailPic = thumbnail;
+
 
     let formData = new FormData();
 
@@ -17,10 +20,12 @@ export default function NewArticle() {
     formData.append("thumbnail", thumbnail);
     formData.append("media", media);
 
+
     axios.post("http://localhost:8000/articles/new", formData, {
       headers: { "Content-Type": "multipart/form-data" },
     });
   };
+
 
   let handleThumbnailChange = (e) => {
     setThumbnail(e.target.files[0]);

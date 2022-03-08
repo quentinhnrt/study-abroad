@@ -3,16 +3,21 @@ import axios from "axios";
 import "./Articles.css";
 
 export default function Articles() {
+
   const [data, setData] = useState([]);
+  const [query, setQuery] = useState('');
+
+
 
   async function getArticles() {
-    const data = (await axios.get("http://localhost:8000/articles")).data;
+    const data = (await axios.get('http://localhost:8000/articles', { params: { title: query } })).data;
     setData(data);
   }
 
   useEffect(() => {
     getArticles();
   }, []);
+
 
   function displayThumbnail(url) {
     return <img src={"http://localhost:8000/thumbnail/" + url} />;
