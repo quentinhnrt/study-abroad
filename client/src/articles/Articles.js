@@ -53,16 +53,26 @@ export default function Articles() {
 
   return (
     <>
+ 
       <h1>Articles !!</h1>
       {console.log(data)}
-      <input type="search" onKeyUp={(e) => search(e)} />
+      <div class="searchbar">
+      <input id="search" type="search"  placeholder="Search for an article" onKeyUp={(e) => search(e)} />
+      </div>
       {data.length ? (
         data.map((x) => (
           <article key={x.id}>
-            {displayThumbnail(x.thumbnailURL)}
+            <div className="article">
+            <div className="article-info">
             <h1 className="Article_title">{x.title}</h1>
-            <section dangerouslySetInnerHTML={{ __html: x.content }}></section>
-            {displayMedia(x.mediaType, x.mediaURL)}
+            <section class="article-content" dangerouslySetInnerHTML={{ __html: x.content }}></section>
+            </div>
+            <div className="media article-thumbnail">{displayThumbnail(x.thumbnailURL)}</div>
+            </div>
+            <div className="article-img">
+            <div className="media">{displayMedia(x.mediaType, x.mediaURL)}</div>
+            </div>
+            <button>Modify</button>
             <Link to={`/articles/delete/${x.id}`}>
               <button>Delete</button>
             </Link>

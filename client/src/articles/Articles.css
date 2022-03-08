@@ -1,5 +1,125 @@
+h1 {
+  text-align: center;
+}
+
+
+
+/* SEARCH BAR */
+#search {
+  text-align: center;
+  border-radius: 25px;
+  border: none;
+  background-color: #DBF1F4;
+}
+.searchbar {
+  display: block;
+  text-align: center;
+}
+
+/* ARTICLES PAGE */
 
 .Article_title {
-  color: #CCAD8F;
-  font-size: 3rem;
+  color: #70AFC1;
+  /* font-size: 3rem; */
+}
+
+article {
+    box-shadow: 0 8px 15px 1px grey;
+    background: rgba(255, 255, 255, 0.90);
+    text-align: center;
+    border-radius: 5px;
+    overflow: hidden;
+    margin: 1em auto;
+    padding-top: 2px; 
+    /* height: 350px;
+    width: 700px; */
+}
+
+.article {
+  display: block;
+  margin-left: auto;
+  margin-right: auto
+}
+
+.article .article-info {
+	display: inline-block;
+	position: relative;
+	color: #344055;
+	margin: 0;
+}
+
+.article .article-info:before {
+  position: absolute;
+	content: '';
+	right: 0%; 
+	top: 0%;
+	transform: translate(25px, -15px);
+	font-family: 'Bree Serif';
+	display: inline-block;
+	background: #ffe6e6;
+	border-radius: 5px;
+	font-size: 14px;
+	padding: 5px;
+	color: white;
+	margin: 0;
+	animation: chan-sh 6s ease infinite;
+}
+
+.article-info {
+}
+
+.article-thumbnail {
+	transition: all 0.3s ease-out;
+	display: inline-block;
+	position: relative;
+	overflow: hidden;
+	height: 100%;
+	float: right;
+	width: 45%;
+	display: inline-block;
+}
+
+.article .article-thumbnail {width: 40%;height: 40%;}
+.article-img {
+
+}
+
+button {
+  background-color: #35B4C3;
+  border: none;
+  color: white;
+  padding: 12px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 12px;
+  margin: 4px 2px;
+  border-radius: 10%;
+}
+
+button:hover {transform: translateX(-110%);;
+  transform: translateX(0%);}
+
+
+@media only screen and (max-width: 768px) {
+  .media > * {
+    max-width: 540px;
+    margin: auto;
+    width: 90%;
+  }
+  .article > h1 {
+  font-size: 12px;
+}
+}
+
+@media only screen and (max-width: 380px) {
+  .media > * {
+    max-width: 250px;
+  }
+  .article-content{
+    font-size: 10px;
+  }
+  h1 {
+    font-size: 10px;
+  }
 }
