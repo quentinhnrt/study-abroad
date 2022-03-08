@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 import "./Articles.css";
+import { Link } from "react-router-dom";
 
 export default function Articles() {
   const [data, setData] = useState([]);
@@ -47,7 +48,9 @@ export default function Articles() {
           <h1 className="Article_title">{x.title}</h1>
           <section dangerouslySetInnerHTML={{ __html: x.content }}></section>
           {displayMedia(x.mediaType, x.mediaURL)}
-          <button>Delete</button>
+          <Link to={`/articles/delete/${x.id}`}>
+            <button>Delete</button>
+          </Link>
         </article>
       ))}
     </>
