@@ -17,6 +17,7 @@ let query = [
 "DROP TABLE IF EXISTS article",
 "DROP TABLE IF EXISTS tag",
 "DROP TABLE IF EXISTS article_tag",
+"CREATE TABLE users(id INTEGER PRIMARY KEY AUTOINCREMENT, name TEXT NOT NULL, password TEXT NOT NULL)",
 "CREATE TABLE article (id INTEGER PRIMARY KEY AUTOINCREMENT, title TEXT NOT NULL, content TEXT NOT NULL, thumbnailURL TEXT, mediaType TEXT, mediaURL TEXT, leadStory INTEGER)",
 "CREATE TABLE tag (id INTEGER PRIMARY KEY AUTOINCREMENT, name TEXT NOT NULL)",
 "CREATE TABLE article_tag (id INTEGER PRIMARY KEY AUTOINCREMENT, idArticle INTEGER REFERENCES article(id), idTag INTEGER REFERENCES tag(id))",
@@ -24,7 +25,8 @@ let query = [
 "INSERT INTO tag (name) values ('ecoal22')",
 "INSERT INTO tag (name) values ('reactJS')",
 "INSERT INTO article_tag (idArticle, idTag) values (1,1)",
-"INSERT INTO article_tag (idArticle, idTag) values (1,2)"
+"INSERT INTO article_tag (idArticle, idTag) values (1,2)",
+"INSERT INTO users (name, password) values ('admin', 'password')",
 ]
 
 
