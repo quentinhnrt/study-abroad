@@ -5,6 +5,7 @@ import "./App.css";
 import NewArticle from "./articles/NewArticle";
 import DeleteArticle from "./articles/DeleteArticle";
 
+
 function App() {
   return (
     <>
@@ -23,6 +24,7 @@ function App() {
           element={<DeleteArticle />}
         />
         <Route exact={true} path="/articles/new" element={<NewArticle />} />
+
         <Route path="*" element={() => <p>Page Not Found</p>} />
       </Routes>
     </>

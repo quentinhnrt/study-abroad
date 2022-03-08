@@ -12,7 +12,18 @@ routes
   })
 
   .get("/articles", (req, res) => {
-    db.all("select * from article", (err, rows) => res.json(rows));
+
+    db.all(`select * from article`, (err, rows) => res.json(rows));
+
+  })
+
+  .get('/search/:title', (req, res) => {
+    let request = req.params.title;
+    console.log(request);
+    db.all(`select * from article WHERE title LIKE "%${request}%"`, (err, rows) =>{
+      res.json(rows)
+    } );
+    
   })
 
   .post("/articles/new", (req, res) => {
