@@ -1,7 +1,9 @@
 import React, { useState } from "react";
 import axios from "axios";
 
-export default function NewArticle() {
+export default function NewArticle(props) {
+  axios.defaults.headers.common['Authorization'] = 'Bearer ' + props.token;
+
   const [thumbnail, setThumbnail] = useState([]);
   const [title, setTitle] = useState("");
   const [content, setContent] = useState("");
