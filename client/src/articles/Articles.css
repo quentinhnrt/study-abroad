@@ -10,6 +10,8 @@ h1 {
   border-radius: 25px;
   border: none;
   background-color: #DBF1F4;
+  width: 80%;
+  padding: 3px;
 }
 .searchbar {
   display: block;
@@ -22,6 +24,62 @@ h1 {
   color: #70AFC1;
   /* font-size: 3rem; */
 }
+
+/* TAGS SEARCH */
+
+ul {
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+  overflow: hidden;
+  /* background-color: #333; */
+}
+
+li {
+  /* float: left; */
+}
+
+li a, .dropbtn {
+  margin-top: 1px;
+  display: inline-block;
+  color: black;
+  text-align: center;
+  padding: 7px 8px;
+  text-decoration: none;
+}
+
+li a:hover, .dropdown:hover .dropbtn {
+  background-color: #DBF1F4;
+}
+
+li.dropdown {
+  display: inline-block;
+}
+
+.dropdown-content {
+  display: none;
+  position: absolute;
+  background-color: #f9f9f9;
+  min-width: 160px;
+  box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+  z-index: 1;
+}
+
+.dropdown-content a {
+  color: black;
+  padding: 6px 8px;
+  text-decoration: none;
+  display: block;
+  text-align: left;
+}
+
+.dropdown-content a:hover {background-color: #f1f1f1;}
+
+.dropdown:hover .dropdown-content {
+  display: block;
+}
+
+
 
 article {
     box-shadow: 0 8px 15px 1px grey;
@@ -88,12 +146,12 @@ button {
   background-color: #35B4C3;
   border: none;
   color: white;
-  padding: 12px;
+  padding: 9px;
   text-align: center;
   text-decoration: none;
   display: inline-block;
   font-size: 12px;
-  margin: 4px 2px;
+  margin: 2px 2px;
   border-radius: 10%;
 }
 

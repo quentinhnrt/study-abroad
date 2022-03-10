@@ -54,24 +54,36 @@ export default function Articles() {
   return (
     <>
  
-      <h1>Articles !!</h1>
+ <h1>Articles !!</h1>
       {console.log(data)}
+      <ul>
+      <li>
       <div class="searchbar">
       <input id="search" type="search"  placeholder="Search for an article" onKeyUp={(e) => search(e)} />
-      </div>
+      </div></li>
+      <li class="dropdown">
+    <a href="javascript:void(0)" class="dropbtn">Tags</a>
+    <div class="dropdown-content">
+      <a href="#">tag 1</a>
+      <a href="#">tag 2</a>
+      <a href="#">tag 3</a>
+    </div>
+    </li>
+    </ul>
       {data.length ? (
         data.map((x) => (
           <article key={x.id}>
             <div className="article">
             <div className="article-info">
             <h1 className="Article_title">{x.title}</h1>
-            <section class="article-content" dangerouslySetInnerHTML={{ __html: x.content }}></section>
+            <section className="article-content" dangerouslySetInnerHTML={{ __html: x.content }}></section>
             </div>
             <div className="media article-thumbnail">{displayThumbnail(x.thumbnailURL)}</div>
             </div>
-            <div className="article-img">
+            {/* <div className="article-img">
             <div className="media">{displayMedia(x.mediaType, x.mediaURL)}</div>
-            </div>
+            </div> */}
+            <button>Add Tag</button>
             <button>Modify</button>
             <Link to={`/articles/delete/${x.id}`}>
               <button>Delete</button>
