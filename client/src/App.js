@@ -11,6 +11,7 @@ import { useEffect } from "react";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 
 function App() {
+
   const [cookies, setCookie, removeCookie] = useCookies(['login']);
   
 
@@ -39,6 +40,17 @@ function App() {
         </nav>
 
       </div>
+
+
+          <div class="dropdown">
+              <button class="dropdown" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    Menu
+              </button>
+              <div class="dropdown-content">
+                  <a href="/articles" > Articles </a>
+                  <a href="/articles/new" > New Article </a>
+              </div>
+          </div>
 
 
       <Routes>
