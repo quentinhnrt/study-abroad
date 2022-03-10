@@ -3,6 +3,7 @@ const routes = express.Router();
 
 const sqlite3 = require("sqlite3").verbose();
 const db = new sqlite3.Database("data/ecoalDB");
+const verify=require('./connectionRouter').verify; // middleware function to protect routes
 
 module.exports = routes;
 
@@ -25,7 +26,7 @@ routes
 
   })
 
-  .post("/articles/new", (req, res) => {
+  .post("/articles/new", verify,(req, res) => {
     req.files.thumbnail.mv(`./thumbnail/${req.files.thumbnail.name}`);
     req.files.media.mv(`./media/${req.files.media.name}`);
 
@@ -34,7 +35,7 @@ routes
     db.run(query);
   })
 
-  .delete("/articles/delete/:id", (req, res) => {
+  .delete("/articles/delete/:id", verify,(req, res) => {
     db.run(`delete from article where id=${req.params.id}`);
   })
 

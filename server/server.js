@@ -3,6 +3,7 @@ const cors = require("cors");
 const morgan = require("morgan");
 const fileUpload = require("express-fileupload");
 const routes = require("./routes");
+const connectionRouter = require('./connectionRouter').router;
 
 const app = express();
 const port = process.env.PORT || 8000;
@@ -20,6 +21,7 @@ app
       tempFileDir: "/tmp/",
     })
   )
+  .use(connectionRouter) // before your app.use(router) line
   .use(routes)
   .use((req, res) => {
     res.status(404);
