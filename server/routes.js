@@ -59,28 +59,17 @@ routes
   })
 
   .put("/editarticle/:id", (req, res) => {
-    if (!req.files) {
+    if (!req.files.media) {
+      req.files.thumbnail.mv(`./thumbnail/${req.files.thumbnail.name}`);
       db.run(
-        `update article set title='${req.body.title}', content='${req.body.content}' where id=${req.params.id}`
+        `update article set title='${req.body.title}', content='${req.body.content}', thumbnailURL='${req.files.thumbnail.name}' where id=${req.params.id}`
       );
     } else {
-      if (req.files.thumbnail && !req.files.media) {
-        req.files.thumbnail.mv(`./thumbnail/${req.files.thumbnail.name}`);
-        db.run(
-          `update article set title='${req.body.title}', content='${req.body.content}', thumbnailURL='${req.files.thumbnail.name}' where id=${req.params.id}`
-        );
-      } else if (!req.files.thumbnail && req.files.media) {
-        req.files.media.mv(`./media/${req.files.media.name}`);
-        db.run(
-          `update article set title='${req.body.title}', content='${req.body.content}', mediaURL='${req.files.media.name}' where id=${req.params.id}`
-        );
-      } else {
-        req.files.thumbnail.mv(`./thumbnail/${req.files.thumbnail.name}`);
-        req.files.media.mv(`./media/${req.files.media.name}`);
-        db.run(
-          `update article set title='${req.body.title}', content='${req.body.content}', mediaURL='${req.files.media.name}', thumbnailURL='${req.files.thumbnail.name}' where id=${req.params.id}`
-        );
-      }
+      req.files.thumbnail.mv(`./thumbnail/${req.files.thumbnail.name}`);
+      req.files.media.mv(`./media/${req.files.media.name}`);
+      db.run(
+        `update article set title='${req.body.title}', content='${req.body.content}', mediaURL='${req.files.media.name}', thumbnailURL='${req.files.thumbnail.name}' where id=${req.params.id}`
+      );
     }
   })
 
