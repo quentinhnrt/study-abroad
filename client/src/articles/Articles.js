@@ -20,7 +20,6 @@ export default function Articles() {
   async function getArticles() {
     const data = (await axios.get("http://localhost:8000/articles")).data;
     setData(data);
-    console.log(data);
   }
 
   useEffect(() => {
@@ -54,7 +53,6 @@ export default function Articles() {
   return (
     <>
       <h1>Articles !!</h1>
-      {console.log(data)}
       <input type="search" onKeyUp={(e) => search(e)} />
       {data.length ? (
         data.map((x) => (
@@ -62,7 +60,13 @@ export default function Articles() {
             {displayThumbnail(x.thumbnailURL)}
             <h1 className="Article_title">{x.title}</h1>
             <section dangerouslySetInnerHTML={{ __html: x.content }}></section>
-            {displayMedia(x.mediaType, x.mediaURL)}
+            {x.mediaType ? displayMedia(x.mediaType, x.mediaURL) : null}
+            <Link to={`/addarticletag/${x.id}`}>
+              <button>Add tags</button>
+            </Link>
+            <Link to={`/articles/edit/${x.id}`}>
+              <button>Edit</button>
+            </Link>
             <Link to={`/articles/delete/${x.id}`}>
               <button>Delete</button>
             </Link>
