@@ -7,14 +7,25 @@ import DeleteArticle from "./articles/DeleteArticle";
 
 
 function App() {
-  return (
-    <>
-      <nav>
+    return (
+       
+        <>
+        <img src="//server/media/logo_ready.png"></img>
+        <nav>
         <Link to="/">Home</Link>
         <Link to="/articles">News</Link>
         <Link to="/articles/new">New Article</Link>
-      </nav>
-
+          </nav>
+          
+          <div class="dropdown">
+              <button class="dropdown" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    Menu
+              </button>
+              <div class="dropdown-content">
+                  <a href="/articles" > Articles </a>
+                  <a href="/articles/new" > New Article </a>
+              </div>
+          </div>
       <Routes>
         <Route exact={true} path="/" element={<Home />} />
         <Route exact={true} path="/articles" element={<Articles />} />
