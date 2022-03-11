@@ -46,14 +46,29 @@ function checkBodyUser(req, res, next) {
 }
 
 // contruire et envoyer un token au client à partir du nom, du password et du mot secret
-function sendToken(req, res) {
-    const user = req.body;
-    const token = jwt.sign({
-        username: user.username,
-        password: user.password
-    }, 'secret', {expiresIn: '1h'});
-    console.log("send token", token);
-    res.status(200).json({'token': token});
+ function sendToken(req, res) {
+    const user = req.body.username;
+ 
+     db.get(
+        'select * from users where name=?',
+        [user],   (err, row) => { 
+            console.log(row, "jdmfq")
+            let admin= "jmdjfm"
+            const token = jwt.sign({
+                username: user.username,
+                password: user.password
+            }, 'secret', {expiresIn: '1h'});
+            console.log("send token", token);
+            res.status(200).json({'token': token, 'admin':row.admin});
+
+
+
+        })
+        
+
+
+
+ 
 }
 
 // vérifier l'authenticité du l'entête pour tout accès sécurisé à l'API
