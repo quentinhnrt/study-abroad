@@ -1,3 +1,4 @@
+
 import './Home.css';
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
@@ -8,6 +9,7 @@ import Login, { ProtectedRoute, ProtectedLink, NotProtectedLink } from "../Login
 import { useCookies, withCookies } from 'react-cookie';
 
 
+
 export default function Home() {
     const [data, setData] = useState([])
     const [show, setShow] = useState(false);
@@ -16,69 +18,79 @@ export default function Home() {
     const [path, setPath] = useState('');
     let navigate = useNavigate();
     let adminValue = parseInt(admin.admin); 
-    function showMenu() {
-        setShow(true);
-    }
 
-    function hideMenu() {
-        setShow(false);
-    }
+  function showMenu() {
+    setShow(true);
+  }
 
+  function hideMenu() {
+    setShow(false);
+  }
 
-    function disconnect(e) {
-        e.preventDefault()
-        removeCookie('login');
-        removeAdmin('admin');
-        navigate('/');
-    }
+  function disconnect(e) {
+    e.preventDefault();
+    removeCookie("login");
+  }
 
-    async function getData() {
-        let lead = (await axios.get("http://localhost:8000/articles/lead")).data;
-        setData(lead)
-    }
+  if (path == "/") {
+    document.getElementsByClassName("");
+  }
 
-    function displayThumbnail(url) {
-        return <img src={"http://localhost:8000/thumbnail/" + url} />;
-    }
+  async function getData() {
+    let lead = (await axios.get("http://localhost:8000/articles/lead")).data;
+    setData(lead);
+  }
 
-    useEffect(() => {
-        getData();
-    }, [])
+  function displayThumbnail(url) {
+    return <img src={"http://localhost:8000/thumbnail/" + url} />;
+  }
 
-    return (
-        <>
-            <div className="homeHeader" >
-                <img src="logo.png" alt="logoLanding" className='homeLogo' />
-                <FontAwesomeIcon icon={faBars} className="fa-barsHome" onClick={showMenu} />
-            </div>
-            <div className={"menu " + (show ? "show" : null)}>
-                <nav>
-                    <Link to="/">Home</Link>
-                    <Link to="/articles">News</Link>
-                    <ProtectedLink to="/articles/new">New Article</ProtectedLink>
-                    <NotProtectedLink to="/user/register">Register</NotProtectedLink>
-                    <NotProtectedLink to="/user/login">Login</NotProtectedLink>
-                    <ProtectedLink to="/" onClick={(e) => disconnect(e)}>Logout</ProtectedLink>
-                    <FontAwesomeIcon icon={faTimes} className="fa-times" onClick={hideMenu} />
+  useEffect(() => {
+    getData();
+  }, []);
 
-                </nav>
+  return (
+    <>
+      <div className="homeHeader">
+        <img src="logo.png" alt="logoLanding" className="homeLogo" />
+        <FontAwesomeIcon
+          icon={faBars}
+          className="fa-barsHome"
+          onClick={showMenu}
+        />
+      </div>
+      <div className={"menu " + (show ? "show" : null)}>
+        <nav>
+          <Link to="/">Home</Link>
+          <Link to="/articles">News</Link>
+          <ProtectedLink to="/articles/new">New Article</ProtectedLink>
+          <NotProtectedLink to="/user/register">Register</NotProtectedLink>
+          <NotProtectedLink to="/user/login">Login</NotProtectedLink>
+          <ProtectedLink to="/" onClick={(e) => disconnect(e)}>
+            Logout
+          </ProtectedLink>
+          <FontAwesomeIcon
+            icon={faTimes}
+            className="fa-times"
+            onClick={hideMenu}
+          />
+        </nav>
+      </div>
+      <div className="articleList">
+        <h1>Home</h1>
+        {data.length ? (
+          data.map((x) => (
+            <article key={x.id} className={"container"}>
+              <div className="article">
+                <div className="media article-thumbnail">
+                  {displayThumbnail(x.thumbnailURL)}
+                </div>
+                <div className="article-info">
+                  <Link to={`/article/${x.id}`}>
+                    <h1 className="Article_title">{x.title}</h1>
+                  </Link>
 
-            </div>
-            <div className="articleList">
-                <h1>Lead Articles</h1>
-                {data.length ? (
-                    data.map((x) => (
-                        <article key={x.id} className={'container'}>
-                            <div className="article">
-                                <div className="media article-thumbnail">
-                                    {displayThumbnail(x.thumbnailURL)}
-                                </div>
-                                <div className="article-info">
-                                    <Link to={`/article/${x.id}`}>
-                                        <h1 className="Article_title">{x.title}</h1>
-                                    </Link>
-
-                                    {adminValue === 1 ? (
+{adminValue === 1 ? (
                                         <div className="buttons">
                                             <Link to={`/addarticletag/${x.id}`}>
                                                 <button>Add Tag</button>
@@ -92,20 +104,19 @@ export default function Home() {
                                                 <button>Delete</button>
                                             </Link>
                                         </div>
-                                    ) : null}
+                                    ) : null} 
+                </div>
+              </div>
 
-                                </div>
-
-                            </div>
-                            {/* <div className="article-img">
-            <div className="media">{displayMedia(x.mediaType, x.mediaURL)}</div>
-            </div> */}
-                        </article>
-                    ))
-                ) : (
-                    <p>no articles</p>
-                )}
-            </div>
-        </>
-    );
+            </article>
+          ))
+        ) : (
+          <p>No articles</p>
+        )}
+        <Link to="/articles">
+          <p className="text-center text-secondary mt-3">More Articles...</p>
+        </Link>
+      </div>
+    </>
+  );
 }

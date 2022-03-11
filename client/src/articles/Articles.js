@@ -2,12 +2,13 @@ import React, { useState, useEffect } from "react";
 import axios from "axios";
 import "./Articles.css";
 import { Link } from "react-router-dom";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faSadTear } from "@fortawesome/free-solid-svg-icons";
 import { Header } from "../header/Header";
 
 export default function Articles() {
   const [data, setData] = useState([]);
-  const [tags, setTags] = useState([])
-
+  const [tags, setTags] = useState([]);
 
   async function search(e) {
     let req = e.target.value;
@@ -22,11 +23,12 @@ export default function Articles() {
 
   async function filter(e) {
     let tag = e.target.value;
-    const request = (await axios.get(`http://localhost:8000/filterTag/${tag}`)).data
+    const request = (await axios.get(`http://localhost:8000/filterTag/${tag}`))
+      .data;
     setData(request);
   }
   async function getTags() {
-    const tagsList = (await axios.get('http://localhost:8000/tags')).data
+    const tagsList = (await axios.get("http://localhost:8000/tags")).data;
     setTags(tagsList);
   }
 
@@ -44,43 +46,32 @@ export default function Articles() {
     return <img src={"http://localhost:8000/thumbnail/" + url} />;
   }
 
-  function displayMedia(type, url) {
-    let fileType = type.split("/")[0];
-    if (fileType === "image") {
-      return <img src={"http://localhost:8000/media/" + url} />;
-    } else if (fileType === "video") {
-      return (
-        <video controls>
-          <source
-            src={"http://localhost:8000/media/" + url}
-            type={type}
-          ></source>
-        </video>
-      );
-    } else if (fileType === "audio") {
-      <audio controls>
-        <source src={"http://localhost:8000/media/" + url} type={type}></source>
-      </audio>;
-    }
-  }
-
   return (
     <>
       <Header />
       <h1>News</h1>
-      <div className="searchbar">
-        <input id="search" type="search" placeholder="Search for an article" onKeyUp={(e) => search(e)} />
+      <div className="searchbar pt-3">
+        <input
+          id="search"
+          type="search"
+          placeholder="Search for an article"
+          onKeyUp={(e) => search(e)}
+        />
         <select onChange={(e) => filter(e)}>
           <option>All</option>
-          {tags.length ? (tags.map((x) => (
-            <option value={x.name}key={x.id}>{x.name}</option>
-          ))) : null}
+          {tags.length
+            ? tags.map((x) => (
+                <option value={x.name} key={x.id}>
+                  {x.name}
+                </option>
+              ))
+            : null}
         </select>
       </div>
       <div className="articleList">
         {data.length ? (
           data.map((x) => (
-            <article key={x.id} className={'container'}>
+            <article key={x.id} className={"container rounded"}>
               <div className="article">
                 <div className="media article-thumbnail">
                   {displayThumbnail(x.thumbnailURL)}
@@ -104,7 +95,6 @@ export default function Articles() {
                     </Link>
                   </div>
                 </div>
-
               </div>
               {/* <div className="article-img">
             <div className="media">{displayMedia(x.mediaType, x.mediaURL)}</div>
@@ -112,10 +102,12 @@ export default function Articles() {
             </article>
           ))
         ) : (
-          <p>no articles</p>
+          <div className="text-center">
+            <FontAwesomeIcon icon={faSadTear} className="fa-sad-tear" />
+            <h5 className="mt-2">No article found</h5>
+          </div>
         )}
       </div>
-
     </>
   );
 }
