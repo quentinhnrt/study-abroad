@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import axios from "axios";
 import "./Articles.css";
 import { Link } from "react-router-dom";
+import { Header } from "../header/Header";
 
 export default function Articles() {
   const [data, setData] = useState([]);
@@ -52,6 +53,7 @@ export default function Articles() {
 
   return (
     <>
+      <Header/>
       <h1>Articles !!</h1>
       <input type="search" onKeyUp={(e) => search(e)} />
       {data.length ? (
