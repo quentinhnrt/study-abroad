@@ -1,13 +1,15 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
-import { Link } from "react-router-dom";
+import { Link, Navigate } from "react-router-dom";
 import { useParams } from "react-router-dom";
+import { Header } from "../header/Header";
 
 export default function AddTagToArticle() {
   const [allTags, setAllTags] = useState([]);
   const [tags, setTags] = useState([]);
   const [article, setArticle] = useState([]);
   const [selectedTag, setSelectedTag] = useState("");
+  const [redirect, setRedirect] = useState(false);
 
   const { id } = useParams();
 
@@ -45,56 +47,61 @@ export default function AddTagToArticle() {
     tagObj.articleId = parseInt(id);
     tagObj.tags = tags;
     axios.post(`http://localhost:8000/articletags/${parseInt(id)}`, tagObj);
+    setRedirect(true);
   };
 
   return (
-    <div className="card shadow m-3">
-      <h1 className="card-header text-center">
-        {article.length ? article[0].title : null}
-      </h1>
-      <form className="p-3">
-        <div className="form-group">
-          <label>Add tags to article</label>
-          <div className="input-group">
-            <select className="form-control" onChange={handleTagChange}>
-              <option selected disabled>
-                Choose tag
-              </option>
-              {allTags
-                .filter((g) => !tags.includes(g.name))
-                .map((g) => (
-                  <option value={g.name}>{g.name}</option>
-                ))}
-            </select>
-            <button
-              className="btn btn-outline-secondary"
-              type="button"
-              onClick={addTag}
-            >
-              Add tag
-            </button>
-          </div>
-          {tags.map((g) => (
-            <span className="badge badge-secondary p-1 mt-2 mr-2" key={g}>
-              {g}
-              <span data-id={g} className="ml-1" onClick={removeTag}>
-                &nbsp;&times;
+    <>
+      <Header />
+      <div className="card shadow m-3">
+        {redirect ? <Navigate to="/articles" /> : null}
+        <h1 className="card-header text-center">
+          {article.length ? article[0].title : null}
+        </h1>
+        <form className="p-3">
+          <div className="form-group">
+            <label>Add tags to article</label>
+            <div className="input-group">
+              <select className="form-control" onChange={handleTagChange}>
+                <option selected disabled>
+                  Choose tag
+                </option>
+                {allTags
+                  .filter((g) => !tags.includes(g.name))
+                  .map((g) => (
+                    <option value={g.name}>{g.name}</option>
+                  ))}
+              </select>
+              <button
+                className="btn btn-outline-secondary"
+                type="button"
+                onClick={addTag}
+              >
+                Add tag
+              </button>
+            </div>
+            {tags.map((g) => (
+              <span className="badge badge-secondary p-1 mt-2 mr-2" key={g}>
+                {g}
+                <span data-id={g} className="ml-1" onClick={removeTag}>
+                  &nbsp;&times;
+                </span>
               </span>
-            </span>
-          ))}
-        </div>
-        <button
-          className="btn btn-block btn-outline-success mt-4"
-          onClick={handleSubmit}
-        >
-          Submit
-        </button>
-        <Link to="/articles">
-          <button className="btn btn-block btn-outline-danger mt-3">
-            Cancel
+            ))}
+          </div>
+          <button
+            className="btn btn-block btn-outline-success mt-4"
+            onClick={handleSubmit}
+          >
+            Submit
           </button>
-        </Link>
-      </form>
-    </div>
+          <Link to="/articles">
+            <button className="btn btn-block btn-outline-danger mt-3">
+              Cancel
+            </button>
+          </Link>
+        </form>
+      </div>
+    </>
   );
 }
