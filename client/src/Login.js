@@ -7,7 +7,7 @@ import { Header } from './header/Header';
 function FormLogin(props) {
     return (
         <><Header /><div className="container2 ">
-            <div className="card">
+            <div className="card">  
                 <article className="card-body">
                     <a href="/user/register" className="float-right btn btn-outline-primary">Sign up</a>
                     <h4 className="card-title mb-4 mt-1">Sign in</h4>
