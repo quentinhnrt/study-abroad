@@ -142,6 +142,11 @@ routes
   })
 
   .get('/filterTag/:tagName', (req, res) => {
+    if(req.params.tagName == "All") {
+      db.all(`SELECT article.* from article`, (err, rows) => {
+        res.json(rows); 
+      })}
+      else 
     db.all(`SELECT article.* from article join article_tag on idArticle=article.id JOIN tag on idTag=tag.id WHERE tag.name = '${req.params.tagName}'`, (err, rows) => {
       res.json(rows); 
     })

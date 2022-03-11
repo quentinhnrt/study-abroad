@@ -41,7 +41,7 @@ export default function Articles() {
   }, []);
 
   function displayThumbnail(url) {
-    return <img src={"http://localhost:8000/media/" + url} />;
+    return <img src={"http://localhost:8000/thumbnail/" + url} />;
   }
 
   function displayMedia(type, url) {
@@ -71,8 +71,9 @@ export default function Articles() {
       <div className="searchbar">
         <input id="search" type="search" placeholder="Search for an article" onKeyUp={(e) => search(e)} />
         <select onChange={(e) => filter(e)}>
+          <option>All</option>
           {tags.length ? (tags.map((x) => (
-            <option value={x.name}>{x.name}</option>
+            <option value={x.name}key={x.id}>{x.name}</option>
           ))) : null}
         </select>
       </div>
@@ -85,10 +86,19 @@ export default function Articles() {
                   {displayThumbnail(x.thumbnailURL)}
                 </div>
                 <div className="article-info">
-                  <h1 className="Article_title">{x.title}</h1>
+                  <Link to={`/article/${x.id}`}>
+                    <h1 className="Article_title">{x.title}</h1>
+                  </Link>
+
                   <div className="buttons">
-                    <button>Add Tag</button>
-                    <button>Modify</button>
+                    <Link to={`/addarticletag/${x.id}`}>
+                      <button>Add Tag</button>
+                    </Link>
+
+                    <Link to={`/articles/edit/${x.id}`}>
+                      <button>Modify</button>
+                    </Link>
+
                     <Link to={`/articles/delete/${x.id}`}>
                       <button>Delete</button>
                     </Link>

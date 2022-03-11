@@ -38,7 +38,6 @@ body, html{
 .logo {
   width: auto;
   height: 100%;
-
   object-fit: cover;
 }
 
@@ -74,6 +73,10 @@ body, html{
   text-decoration: none;
   font-size: 2rem;
 
+}
+
+.footer{
+  height: 10vh;
 }
  /* nav a {
 =======
