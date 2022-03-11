@@ -50,7 +50,7 @@ export default function Articles() {
     <>
       <Header />
       <h1>News</h1>
-      <div className="searchbar">
+      <div className="searchbar pt-3">
         <input
           id="search"
           type="search"
@@ -71,7 +71,7 @@ export default function Articles() {
       <div className="articleList">
         {data.length ? (
           data.map((x) => (
-            <article key={x.id} className={"container"}>
+            <article key={x.id} className={"container rounded"}>
               <div className="article">
                 <div className="media article-thumbnail">
                   {displayThumbnail(x.thumbnailURL)}
