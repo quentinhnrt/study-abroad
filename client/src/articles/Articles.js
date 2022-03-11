@@ -6,6 +6,8 @@ import { Header } from "../header/Header";
 
 export default function Articles() {
   const [data, setData] = useState([]);
+  const [tags, setTags] = useState([])
+
 
   async function search(e) {
     let req = e.target.value;
@@ -18,6 +20,16 @@ export default function Articles() {
     }
   }
 
+  async function filter(e) {
+    let tag = e.target.value;
+    const request = (await axios.get(`http://localhost:8000/filterTag/${tag}`)).data
+    setData(request);
+  }
+  async function getTags() {
+    const tagsList = (await axios.get('http://localhost:8000/tags')).data
+    setTags(tagsList);
+  }
+
   async function getArticles() {
     const data = (await axios.get("http://localhost:8000/articles")).data;
     setData(data);
@@ -25,10 +37,11 @@ export default function Articles() {
 
   useEffect(() => {
     getArticles();
+    getTags();
   }, []);
 
   function displayThumbnail(url) {
-    return <img src={"http://localhost:8000/thumbnail/" + url} />;
+    return <img src={"http://localhost:8000/media/" + url} />;
   }
 
   function displayMedia(type, url) {
@@ -53,50 +66,46 @@ export default function Articles() {
 
   return (
     <>
-
- <Header/>
- <h1>Articles !!</h1>
-      {console.log(data)}
-      <ul>
-      <li>
+      <Header />
+      <h1>News</h1>
       <div className="searchbar">
-      <input id="search" type="search"  placeholder="Search for an article" onKeyUp={(e) => search(e)} />
-      </div></li>
-      <li className="dropdown">
-    <a href="javascript:void(0)" className="dropbtn">Tags</a>
-    <div className="dropdown-content">
-      <a href="#">tag 1</a>
-      <a href="#">tag 2</a>
-      <a href="#">tag 3</a>
-    </div>
-    </li>
-    </ul>
-      {data.length ? (
-        data.map((x) => (
-          <article key={x.id}>
-            <div className="article">
-            <div className="article-info">
-            <h1 className="Article_title">{x.title}</h1>
+        <input id="search" type="search" placeholder="Search for an article" onKeyUp={(e) => search(e)} />
+        <select onChange={(e) => filter(e)}>
+          {tags.length ? (tags.map((x) => (
+            <option value={x.name}>{x.name}</option>
+          ))) : null}
+        </select>
+      </div>
+      <div className="articleList">
+        {data.length ? (
+          data.map((x) => (
+            <article key={x.id} className={'container'}>
+              <div className="article">
+                <div className="media article-thumbnail">
+                  {displayThumbnail(x.thumbnailURL)}
+                </div>
+                <div className="article-info">
+                  <h1 className="Article_title">{x.title}</h1>
+                  <div className="buttons">
+                    <button>Add Tag</button>
+                    <button>Modify</button>
+                    <Link to={`/articles/delete/${x.id}`}>
+                      <button>Delete</button>
+                    </Link>
+                  </div>
+                </div>
 
-            <section className="article-content" dangerouslySetInnerHTML={{ __html: x.content }}></section>
-            </div>
-            <div className="media article-thumbnail">{displayThumbnail(x.thumbnailURL)}</div>
-            </div>
-            {/* <div className="article-img">
+              </div>
+              {/* <div className="article-img">
             <div className="media">{displayMedia(x.mediaType, x.mediaURL)}</div>
             </div> */}
-            <button>Add Tag</button>
-            <button>Modify</button>
+            </article>
+          ))
+        ) : (
+          <p>no articles</p>
+        )}
+      </div>
 
-
-            <Link to={`/articles/delete/${x.id}`}>
-              <button>Delete</button>
-            </Link>
-          </article>
-        ))
-      ) : (
-        <p>no articles</p>
-      )}
     </>
   );
 }

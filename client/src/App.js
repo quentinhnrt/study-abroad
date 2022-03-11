@@ -1,6 +1,7 @@
 import { Route, Link, Routes } from "react-router-dom";
 import Home from "./home/Home";
 import Articles from "./articles/Articles";
+import Article from "./article/Article";
 import "./App.css";
 import NewArticle from "./articles/NewArticle";
 import DeleteArticle from "./articles/DeleteArticle";
@@ -23,7 +24,8 @@ function App() {
 
       <Routes>
         <Route exact={true} path="/" element={<Home />} />
-        <Route exact={true} path="/articles" element={<Articles />} />
+        <Route exact={true} path="/articles" element={<Articles />} /> 
+        <Route exact={true} path="/article/:id" element={<Article />} />
         <Route
           exact={true}
           path="/articles/delete/:id"
@@ -54,7 +56,7 @@ function App() {
         <Route exact={true} path="/user/register" element={<Register />} />
         <Route exact={true} path="/user/login" element={<Login />} />
 
-        <Route path="*" element={() => <p>Page Not Found</p>} />
+        <Route path="*" element={<p>Page Not Found</p>} />
       </Routes>
     </>
   );

@@ -1,6 +1,7 @@
 import axios from "axios";
 import React, { useState, useEffect } from "react";
 import { Navigate } from 'react-router'
+import { Header } from "../header/Header";
 export default function Register() {
     const [error, setError] = useState('');
     async function registerUser(e) {
@@ -10,31 +11,30 @@ export default function Register() {
         let confirmPassword = document.getElementById('confirmPassword').value;
 
         await axios.get(`http://localhost:8000/user/register/${name}`)
-        .then(res => {
-            if (res.data.length === 0) {
-                if (password === confirmPassword) {
+            .then(res => {
+                if (res.data.length === 0) {
+                    if (password === confirmPassword) {
 
-                    axios.post(`http://localhost:8000/user/register/`, {name: name, password: password}).then(() => {
-                        setError("Account created")
-                        return <Navigate to="/" />;
-                    });
+                        axios.post(`http://localhost:8000/user/register/`, { name: name, password: password, admin: 0 }).then(() => {
+                            setError("Account created")
+                            return <Navigate to="/" />;
+                        });
+                    } else {
+                        setError("Password are not the same")
+                    }
                 } else {
-                    setError("Password are not the same")
+                    setError("This username is already taken")
                 }
-            } else {
-                setError("This username is already taken")
-            }
-        });
+            });
 
 
 
 
     }
 
-    
+
     return (
-        
-        <div className="register">
+        <><Header /><div className="register">
             <h1>Register</h1>
             <form>
                 <input type="text" id="name" />
@@ -43,6 +43,6 @@ export default function Register() {
                 <button onClick={(e) => registerUser(e)}>Register</button>
                 <h3>{error}</h3>
             </form>
-        </div>
+        </div></>
     )
 }
