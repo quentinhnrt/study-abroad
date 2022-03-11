@@ -60,3 +60,11 @@ routes
       res.json(rows)
     });
   })
+
+  .get('/articles/lead', (req, res) => {
+    db.all("select * from article where leadStory = 1", (err, rows) => {
+      console.log(err);
+      res.json(rows);
+    });
+    
+  })

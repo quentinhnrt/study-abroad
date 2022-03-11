@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
+import { Header } from "../header/Header";
 
 export default function NewArticle(props) {
   axios.defaults.headers.common['Authorization'] = 'Bearer ' + props.token;
@@ -38,7 +39,7 @@ export default function NewArticle(props) {
   };
 
   return (
-    <div className="newArticle">
+    <><Header /><div className="newArticle">
       <form>
         <input type="text" name="title" id="title" />
         <textarea cols="30" rows="10" id="content"></textarea>
@@ -48,6 +49,6 @@ export default function NewArticle(props) {
         <input onChange={handleMediaChange} type="file" name="media" />
         <button onClick={postArticle}>Send</button>
       </form>
-    </div>
+    </div></>
   );
 }
