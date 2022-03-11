@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
-import { useParams } from "react-router-dom";
+import { Navigate, useParams } from "react-router-dom";
 import { Header } from "../header/Header";
 
 export default function EditArticle() {
@@ -10,6 +10,7 @@ export default function EditArticle() {
   const [media, setMedia] = useState([]);
   const [mediaType, setMediaType] = useState([]);
   const [leadStory, setLeadStory] = useState(1);
+  const [navigate, setNavigate] = useState(false);
 
   let { id } = useParams();
 
@@ -45,6 +46,8 @@ export default function EditArticle() {
     axios.put(`http://localhost:8000/editarticle/${id}`, formData, {
       headers: { "Content-Type": "multipart/form-data" },
     });
+
+    setNavigate(true);
   };
 
   let handleTitleChange = (e) => {
@@ -85,7 +88,10 @@ export default function EditArticle() {
 
   function displayThumbnail(url) {
     return (
-      <img className="w-100" src={"http://localhost:8000/thumbnail/" + url} />
+      <img
+        className="w-100 mt-2"
+        src={"http://localhost:8000/thumbnail/" + url}
+      />
     );
   }
 
@@ -94,7 +100,7 @@ export default function EditArticle() {
     if (fileType === "image") {
       return (
         <img
-          className="w-100 rounded"
+          className="w-100 rounded mt-2"
           src={"http://localhost:8000/media/" + url}
         />
       );
@@ -135,90 +141,99 @@ export default function EditArticle() {
   }
 
   return (
-    <><Header /><div className="card m-3 shadow">
-      <div className="card-header">
-        <h1 className="text-center">Edit Article</h1>
+    <>
+      <Header />
+      {navigate ? <Navigate to="/articles" /> : null}
+      <div className="card m-3 shadow">
+        <div className="card-header">
+          <h1 className="text-center">Edit Article</h1>
+        </div>
+        <form className="p-3">
+          <div className="form-group">
+            <label>Title</label>
+            <input
+              onChange={handleTitleChange}
+              className="form-control"
+              type="text"
+              name="title"
+              id="title"
+              value={title}
+            />
+            {titleError}
+          </div>
+          <div className="form-group">
+            <label>Content</label>
+            <textarea
+              className="form-control"
+              cols="30"
+              rows="10"
+              id="content"
+              onChange={handleContentChange}
+              value={content}
+            ></textarea>
+            {contentError}
+          </div>
+          <div className="form-group">
+            <label>Thumbnail</label>
+            <div className="custom-file">
+              <input
+                onChange={handleThumbnailChange}
+                type="file"
+                className="custom-file-input"
+              />
+              <label className="custom-file-label">
+                {thumbnail ? thumbnail.name : "Choose file"}
+              </label>
+              {thumbnailError}
+            </div>
+            {displayThumbnail(thumbnail)}
+          </div>
+          <div className="form-group">
+            <label>Media</label>
+            <div className="custom-file">
+              <input
+                onChange={handleMediaChange}
+                type="file"
+                name="media"
+                className="custom-file-input"
+              />
+              <label className="custom-file-label">
+                {media ? media.name : "Choose file"}
+              </label>
+            </div>
+            {mediaType.length ? displayMedia(mediaType, media) : null}
+          </div>
+
+          <label className="form-check-label mr-3">Lead story?</label>
+          <div className="form-check form-check-inline">
+            <input
+              type="radio"
+              name="leadStory"
+              checked={leadStory === 1}
+              onClick={() => setLeadStory(1)}
+            />
+            <span className="form-check-label ml-1">Yes</span>
+          </div>
+
+          <div className="form-check form-check-inline">
+            <input
+              type="radio"
+              name="leadStory"
+              checked={leadStory === 0}
+              onClick={() => setLeadStory(0)}
+            />
+            <span className="form-check-label ml-1">No</span>
+          </div>
+
+          <button
+            className="btn btn-block btn-outline-success mt-4"
+            onClick={postArticle}
+            disabled={!inputsAreAllValid}
+          >
+            Send
+          </button>
+        </form>
       </div>
-      <form className="p-3">
-        <div className="form-group">
-          <label>Title</label>
-          <input
-            onChange={handleTitleChange}
-            className="form-control"
-            type="text"
-            name="title"
-            id="title"
-            value={title} />
-          {titleError}
-        </div>
-        <div className="form-group">
-          <label>Content</label>
-          <textarea
-            className="form-control"
-            cols="30"
-            rows="10"
-            id="content"
-            onChange={handleContentChange}
-            value={content}
-          ></textarea>
-          {contentError}
-        </div>
-        <div className="form-group">
-          <label>Thumbnail</label>
-          <div className="custom-file">
-            <input
-              onChange={handleThumbnailChange}
-              type="file"
-              className="custom-file-input" />
-            <label className="custom-file-label">
-              {thumbnail ? thumbnail.name : "Choose file"}
-            </label>
-            {thumbnailError}
-          </div>
-          {displayThumbnail(thumbnail)}
-        </div>
-        <div className="form-group">
-          <label>Media</label>
-          <div className="custom-file">
-            <input
-              onChange={handleMediaChange}
-              type="file"
-              name="media"
-              className="form-control-file" />
-            <label className="custom-file-label">
-              {media ? media.name : "Choose file"}
-            </label>
-          </div>
-          {mediaType.length ? displayMedia(mediaType, media) : null}
-        </div>
-
-        <label className="form-check-label mr-3">Lead story?</label>
-        <div className="form-check form-check-inline">
-          <input
-            type="radio"
-            name="leadStory"
-            checked={leadStory === 1}
-            onClick={() => setLeadStory(1)} />
-          <span className="form-check-label ml-1">Yes</span>
-        </div>
-
-        <div className="form-check form-check-inline">
-          <input
-            type="radio"
-            name="leadStory"
-            checked={leadStory === 0}
-            onClick={() => setLeadStory(0)} />
-          <span className="form-check-label ml-1">No</span>
-        </div>
-
-        <button
-          className="btn btn-block btn-outline-success mt-4"
-          onClick={postArticle}
-          disabled={!inputsAreAllValid}
-        >
-          Send
-        </button>
-      </form>
-    </div></>
+    </>
   );
 }
