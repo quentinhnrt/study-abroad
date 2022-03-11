@@ -10,15 +10,16 @@ import Tags from "./tags/Tags";
 import AddTagToArticle from "./tags/AddTagToArticle";
 
 import Register from "./user/Register";
-import Login, {
-  ProtectedRoute,
-  ProtectedLink,
-  NotProtectedLink,
-} from "./Login";
-import { useCookies, withCookies } from "react-cookie";
+import Login, { ProtectedRoute, ProtectedLink, NotProtectedLink } from "./Login";
+import { useCookies, withCookies } from 'react-cookie';
+import { useEffect } from "react";
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+
 
 function App() {
-  const [cookies, setCookie, removeCookie] = useCookies(["login"]);
+
+  const [cookies, setCookie, removeCookie] = useCookies(['login']);
+  
 
   function disconnect(e) {
     e.preventDefault();
@@ -27,20 +28,24 @@ function App() {
 
   return (
     <>
-      <nav>
-        <Link to="/">Home</Link>
-        <Link to="/articles">News</Link>
 
-        <Link to="/tags">Tags</Link>
+      <div className="header">
+        <div className="container">
+          <img src="logo.png" alt="logo" className="logo" />
+        </div>
 
-        <ProtectedLink to="/articles/new">New Article</ProtectedLink>
-        <NotProtectedLink to="/user/register">Register</NotProtectedLink>
-        <NotProtectedLink to="/user/login">Login</NotProtectedLink>
-        <ProtectedLink to="/" onClick={(e) => disconnect(e)}>
-          Logout
-        </ProtectedLink>
-      </nav>
-
+      </div>
+      <div className="menu">
+        <nav>
+          <Link to="/">Home</Link>
+          <Link to="/articles">News</Link>
+          <Link to="/tags">Tags</Link>
+          <ProtectedLink to="/articles/new">New Article</ProtectedLink>
+          <NotProtectedLink to="/user/register">Register</NotProtectedLink>
+          <NotProtectedLink to="/user/login">Login</NotProtectedLink>
+          <ProtectedLink to="/" onClick={(e) => disconnect(e)}>Logout</ProtectedLink>
+        </nav>
+      </div>
       <div className="dropdown">
         <button
           className="dropdown"
