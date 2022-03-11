@@ -22,6 +22,7 @@ let query = [
 "CREATE TABLE tag (id INTEGER PRIMARY KEY AUTOINCREMENT, name TEXT NOT NULL)",
 "CREATE TABLE article_tag (id INTEGER PRIMARY KEY AUTOINCREMENT, idArticle INTEGER REFERENCES article(id), idTag INTEGER REFERENCES tag(id))",
 "INSERT INTO article (title, content, thumbnailURL, mediaType, mediaURL) values ('Welcome to ecoal22', '<h1>Hello from ecoal</h1><p>Nice to see you in <strong>Lens</strong>. Enjoy !</p>', 'ecoal.jpg', 'image', 'ecoal.jpg')",
+"INSERT INTO article (title, content, thumbnailURL, mediaType, mediaURL, leadStory) values ('Leadstory', '<h1>Hello from ecoal</h1><p>Nice to see you in <strong>Lens</strong>. Enjoy !</p>', 'ecoal.jpg', 'image', 'ecoal.jpg', 1)",
 "INSERT INTO tag (name) values ('ecoal22')",
 "INSERT INTO tag (name) values ('reactJS')",
 "INSERT INTO article_tag (idArticle, idTag) values (1,1)",

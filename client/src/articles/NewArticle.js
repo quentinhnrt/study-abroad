@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import axios from "axios";
+import { Header } from "../header/Header";
 
 export default function NewArticle(props) {
   axios.defaults.headers.common['Authorization'] = 'Bearer ' + props.token;
@@ -83,6 +84,9 @@ export default function NewArticle(props) {
   }
 
   return (
+
+    <>
+    <Header />
     <div className="card m-3 shadow">
       <div className="card-header">
         <h1 className="text-center">New Article</h1>
@@ -167,7 +171,8 @@ export default function NewArticle(props) {
         >
           Send
         </button>
+
       </form>
-    </div>
+    </div></>
   );
 }

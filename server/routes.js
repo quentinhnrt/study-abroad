@@ -114,11 +114,18 @@ routes
   .get("/user/login/:name/:password", (req, res) => {
     let name = req.params.name;
     let password = req.params.password;
-    db.all(
-      `select * from users where name = '${name}' AND password = '${password}'`,
-      (err, rows) => {
-        console.log(err);
-        res.json(rows);
-      }
-    );
-  });
+
+    db.all(`select * from users where name = '${name}' AND password = '${password}'`, (err,rows) => {
+      console.log(err);
+      res.json(rows)
+    });
+  })
+
+  .get('/articles/lead', (req, res) => {
+    db.all("select * from article where leadStory = 1", (err, rows) => {
+      console.log(err);
+      res.json(rows);
+    });
+    
+  })
+

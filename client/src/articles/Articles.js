@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import axios from "axios";
 import "./Articles.css";
 import { Link } from "react-router-dom";
+import { Header } from "../header/Header";
 
 export default function Articles() {
   const [data, setData] = useState([]);
@@ -52,21 +53,42 @@ export default function Articles() {
 
   return (
     <>
-      <h1>Articles !!</h1>
-      <input type="search" onKeyUp={(e) => search(e)} />
+
+ <Header/>
+ <h1>Articles !!</h1>
+      {console.log(data)}
+      <ul>
+      <li>
+      <div className="searchbar">
+      <input id="search" type="search"  placeholder="Search for an article" onKeyUp={(e) => search(e)} />
+      </div></li>
+      <li className="dropdown">
+    <a href="javascript:void(0)" className="dropbtn">Tags</a>
+    <div className="dropdown-content">
+      <a href="#">tag 1</a>
+      <a href="#">tag 2</a>
+      <a href="#">tag 3</a>
+    </div>
+    </li>
+    </ul>
       {data.length ? (
         data.map((x) => (
           <article key={x.id}>
-            {displayThumbnail(x.thumbnailURL)}
+            <div className="article">
+            <div className="article-info">
             <h1 className="Article_title">{x.title}</h1>
-            <section dangerouslySetInnerHTML={{ __html: x.content }}></section>
-            {x.mediaType ? displayMedia(x.mediaType, x.mediaURL) : null}
-            <Link to={`/addarticletag/${x.id}`}>
-              <button>Add tags</button>
-            </Link>
-            <Link to={`/articles/edit/${x.id}`}>
-              <button>Edit</button>
-            </Link>
+
+            <section className="article-content" dangerouslySetInnerHTML={{ __html: x.content }}></section>
+            </div>
+            <div className="media article-thumbnail">{displayThumbnail(x.thumbnailURL)}</div>
+            </div>
+            {/* <div className="article-img">
+            <div className="media">{displayMedia(x.mediaType, x.mediaURL)}</div>
+            </div> */}
+            <button>Add Tag</button>
+            <button>Modify</button>
+
+
             <Link to={`/articles/delete/${x.id}`}>
               <button>Delete</button>
             </Link>
