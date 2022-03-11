@@ -13,6 +13,7 @@ let db = new sqlite3.Database(
 );
 
 let query = [
+
   "PRAGMA foreign_keys = ON",
   "DROP TABLE IF EXISTS article",
   "DROP TABLE IF EXISTS tag",
@@ -61,6 +62,7 @@ let query = [
   "INSERT INTO article_tag (idArticle, idTag) values (10,1)",
   "INSERT INTO users (name, password, admin) values ('admin', 'password', 1)",
 ];
+
 
 db.serialize(() => {
   query.forEach((item) => {

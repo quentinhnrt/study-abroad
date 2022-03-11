@@ -37,6 +37,7 @@ function Login() {
             const p = (await axios.post('http://localhost:8000/signup', user));
             if (p.status === 200) {
                 user.token = p.data.token;
+           
                 setCookie('login', user, '/');
             }
         } catch (err) {
@@ -48,13 +49,15 @@ function Login() {
         e.preventDefault();
         const user = {
             username: e.target.username.value,
-            password: e.target.password.value
+            password: e.target.password.value,
         };
         try {
             const p = (await axios.post('http://localhost:8000/signin', user));
             if (p.status === 200) {
                 user.token = p.data.token;
+                console.log(p.data.admin, "jmjmjmjmj")
                 setCookie('login', user, '/');
+                setCookie('admin', p.data.admin, '/');
             }
         } catch (err) {
             console.error(err)

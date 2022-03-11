@@ -1,0 +1,9 @@
+.tagsName{
+    list-style: none;
+    display: flex;
+    gap: 1rem;
+}
+
+.articleTitle{
+    color: #70afc1;
+}

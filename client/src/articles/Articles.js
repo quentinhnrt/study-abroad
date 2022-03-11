@@ -2,9 +2,12 @@ import React, { useState, useEffect } from "react";
 import axios from "axios";
 import "./Articles.css";
 import { Link } from "react-router-dom";
+import { Header } from "../header/Header";
 
 export default function Articles() {
   const [data, setData] = useState([]);
+  const [tags, setTags] = useState([])
+
 
   async function search(e) {
     let req = e.target.value;
@@ -17,6 +20,16 @@ export default function Articles() {
     }
   }
 
+  async function filter(e) {
+    let tag = e.target.value;
+    const request = (await axios.get(`http://localhost:8000/filterTag/${tag}`)).data
+    setData(request);
+  }
+  async function getTags() {
+    const tagsList = (await axios.get('http://localhost:8000/tags')).data
+    setTags(tagsList);
+  }
+
   async function getArticles() {
     const data = (await axios.get("http://localhost:8000/articles")).data;
     setData(data);
@@ -24,10 +37,11 @@ export default function Articles() {
 
   useEffect(() => {
     getArticles();
+    getTags();
   }, []);
 
   function displayThumbnail(url) {
-    return <img src={"http://localhost:8000/thumbnail/" + url} />;
+    return <img src={"http://localhost:8000/media/" + url} />;
   }
 
   function displayMedia(type, url) {
@@ -52,29 +66,46 @@ export default function Articles() {
 
   return (
     <>
-      <h1>Articles !!</h1>
-      <input type="search" onKeyUp={(e) => search(e)} />
-      {data.length ? (
-        data.map((x) => (
-          <article key={x.id}>
-            {displayThumbnail(x.thumbnailURL)}
-            <h1 className="Article_title">{x.title}</h1>
-            <section dangerouslySetInnerHTML={{ __html: x.content }}></section>
-            {x.mediaType ? displayMedia(x.mediaType, x.mediaURL) : null}
-            <Link to={`/addarticletag/${x.id}`}>
-              <button>Add tags</button>
-            </Link>
-            <Link to={`/articles/edit/${x.id}`}>
-              <button>Edit</button>
-            </Link>
-            <Link to={`/articles/delete/${x.id}`}>
-              <button>Delete</button>
-            </Link>
-          </article>
-        ))
-      ) : (
-        <p>no articles</p>
-      )}
+      <Header />
+      <h1>News</h1>
+      <div className="searchbar">
+        <input id="search" type="search" placeholder="Search for an article" onKeyUp={(e) => search(e)} />
+        <select onChange={(e) => filter(e)}>
+          {tags.length ? (tags.map((x) => (
+            <option value={x.name}>{x.name}</option>
+          ))) : null}
+        </select>
+      </div>
+      <div className="articleList">
+        {data.length ? (
+          data.map((x) => (
+            <article key={x.id} className={'container'}>
+              <div className="article">
+                <div className="media article-thumbnail">
+                  {displayThumbnail(x.thumbnailURL)}
+                </div>
+                <div className="article-info">
+                  <h1 className="Article_title">{x.title}</h1>
+                  <div className="buttons">
+                    <button>Add Tag</button>
+                    <button>Modify</button>
+                    <Link to={`/articles/delete/${x.id}`}>
+                      <button>Delete</button>
+                    </Link>
+                  </div>
+                </div>
+
+              </div>
+              {/* <div className="article-img">
+            <div className="media">{displayMedia(x.mediaType, x.mediaURL)}</div>
+            </div> */}
+            </article>
+          ))
+        ) : (
+          <p>no articles</p>
+        )}
+      </div>
+
     </>
   );
 }

@@ -1,5 +1,132 @@
+h1 {
+  text-align: center;
+}
+
+/* SEARCH BAR */
+#search {
+  text-align: center;
+  border-radius: 25px;
+  border: none;
+  background-color: #dbf1f4;
+  padding: 3px;
+  height: 2rem;
+}
+.searchbar {
+  display: flex;
+  text-align: center;
+  justify-content: space-around;
+}
+
+.articleList{
+  margin-top: 3rem;
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+}
+
+.searchbar input{
+  width: 60%;
+}
+
+.searchbar select{
+  width: 30%;
+}
+
+/* ARTICLES PAGE */
 
 .Article_title {
-  color: #CCAD8F;
-  font-size: 3rem;
+  color: #70afc1;
+  font-size: 1.5rem;
+}
+
+/* TAGS SEARCH */
+
+article {
+  box-shadow: 0 8px 15px 1px grey;
+  background: rgba(255, 255, 255, 0.9);
+  text-align: center;
+  border-radius: 5px;
+  overflow: hidden;
+  margin: 1em auto;
+  padding-top: 1rem;
+  padding-bottom: 1rem;
+  /* height: 350px;
+    width: 700px; */
+}
+
+.article {
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.article .article-info {
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  position: relative;
+  color: #344055;
+  margin: 0;
+  width: 58%;
+}
+
+.article-thumbnail {
+  transition: all 0.3s ease-out;
+  display: inline-block;
+  position: relative;
+  overflow: hidden;
+  height: 100%;
+  width: 45%;
+  display: inline-block;
+}
+
+.article .article-thumbnail {
+  width: 30%;
+  height: 40%;
+}
+
+.buttons{
+  display: flex;
+  justify-content: space-between;
+  width: 100%;
+
+}
+
+button {
+  background-color: #35b4c3;
+  border: none;
+  color: white;
+  padding: 9px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 12px !important;
+  border-radius: 10% !important;
+}
+
+button:hover {
+  transform: translateX(-110%);
+  transform: translateX(0%);
+}
+
+@media (max-width: 768px) {
+  .media > * {
+    max-width: 540px;
+    margin: auto;
+    width: 90%;
+  }
+  .article > h1 {
+    font-size: 12px;
+  }
+}
+
+@media (max-width: 380px) {
+  .media > * {
+    max-width: 250px;
+  }
+  .article-content {
+    font-size: 10px;
+  }
 }

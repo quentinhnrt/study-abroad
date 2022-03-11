@@ -50,12 +50,18 @@ routes
       res.json(rows)
     );
   })
+  .get("/articletag/:id", (req, res) => {
+    db.all(`select tag.* from tag JOIN article_tag ON tag.id=article_tag.idTag where idArticle=${req.params.id}`, (err, rows) =>
+      res.json(rows)
+    );
+  })
 
   .get("/leadarticles", (req, res) => {
     db.all(`select * from article where leadStory=1`, (err, rows) =>
       res.json(rows)
     );
   })
+
 
   .put("/editarticle/:id", (req, res) => {
     if (req.files) {
@@ -112,19 +118,32 @@ routes
   .post("/user/register", (req, res) => {
     let name = req.body.name;
     let password = req.body.password;
+    let admin = req.body.admin;
     db.all(
-      `insert into users(name, password) values('${name}', '${password}')`
+      `insert into users(name, password, admin) values('${name}', '${password}', '${admin}')`
     );
   })
 
   .get("/user/login/:name/:password", (req, res) => {
     let name = req.params.name;
     let password = req.params.password;
-    db.all(
-      `select * from users where name = '${name}' AND password = '${password}'`,
-      (err, rows) => {
-        console.log(err);
-        res.json(rows);
-      }
-    );
-  });
+
+    db.all(`select * from users where name = '${name}' AND password = '${password}'`, (err,rows) => {
+      console.log(err);
+      res.json(rows)
+    });
+  })
+
+  .get('/articles/lead', (req, res) => {
+    db.all("select * from article where leadStory = 1", (err, rows) => {
+      res.json(rows);
+    });
+    
+  })
+
+  .get('/filterTag/:tagName', (req, res) => {
+    db.all(`SELECT article.* from article join article_tag on idArticle=article.id JOIN tag on idTag=tag.id WHERE tag.name = '${req.params.tagName}'`, (err, rows) => {
+      res.json(rows); 
+    })
+  })
+
