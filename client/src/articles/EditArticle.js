@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
-import { Navigate, useParams } from "react-router-dom";
+import { Navigate, useParams, Link } from "react-router-dom";
 import { Header } from "../header/Header";
 
 export default function EditArticle() {
@@ -232,6 +232,11 @@ export default function EditArticle() {
           >
             Send
           </button>
+          <Link to="/articles">
+            <button className="btn btn-block btn-outline-danger mt-4">
+              Cancel
+            </button>
+          </Link>
         </form>
       </div>
     </>
