@@ -51,8 +51,9 @@ routes
     );
   })
   .get("/articletag/:id", (req, res) => {
-    db.all(`select tag.* from tag JOIN article_tag ON tag.id=article_tag.idTag where idArticle=${req.params.id}`, (err, rows) =>
-      res.json(rows)
+    db.all(
+      `select tag.* from tag JOIN article_tag ON tag.id=article_tag.idTag where idArticle=${req.params.id}`,
+      (err, rows) => res.json(rows)
     );
   })
 
@@ -62,13 +63,17 @@ routes
     );
   })
 
-
   .put("/editarticle/:id", (req, res) => {
     if (req.files) {
       if (!req.files.media) {
         req.files.thumbnail.mv(`./thumbnail/${req.files.thumbnail.name}`);
         db.run(
           `update article set title='${req.body.title}', content='${req.body.content}', thumbnailURL='${req.files.thumbnail.name}', leadStory='${req.body.leadStory}' where id=${req.params.id}`
+        );
+      } else if (!req.files.thumbnail) {
+        req.files.media.mv(`./media/${req.files.media.name}`);
+        db.run(
+          `update article set title='${req.body.title}', content='${req.body.content}', mediaURL='${req.files.media.name}', mediaType = '${req.files.media.mimetype}', leadStory='${req.body.leadStory}' where id=${req.params.id}`
         );
       } else {
         req.files.thumbnail.mv(`./thumbnail/${req.files.thumbnail.name}`);
@@ -128,27 +133,31 @@ routes
     let name = req.params.name;
     let password = req.params.password;
 
-    db.all(`select * from users where name = '${name}' AND password = '${password}'`, (err,rows) => {
-      console.log(err);
-      res.json(rows)
-    });
+    db.all(
+      `select * from users where name = '${name}' AND password = '${password}'`,
+      (err, rows) => {
+        console.log(err);
+        res.json(rows);
+      }
+    );
   })
 
-  .get('/articles/lead', (req, res) => {
+  .get("/articles/lead", (req, res) => {
     db.all("select * from article where leadStory = 1", (err, rows) => {
       res.json(rows);
     });
-    
   })
 
-  .get('/filterTag/:tagName', (req, res) => {
-    if(req.params.tagName == "All") {
+  .get("/filterTag/:tagName", (req, res) => {
+    if (req.params.tagName == "All") {
       db.all(`SELECT article.* from article`, (err, rows) => {
-        res.json(rows); 
-      })}
-      else 
-    db.all(`SELECT article.* from article join article_tag on idArticle=article.id JOIN tag on idTag=tag.id WHERE tag.name = '${req.params.tagName}'`, (err, rows) => {
-      res.json(rows); 
-    })
-  })
-
+        res.json(rows);
+      });
+    } else
+      db.all(
+        `SELECT article.* from article join article_tag on idArticle=article.id JOIN tag on idTag=tag.id WHERE tag.name = '${req.params.tagName}'`,
+        (err, rows) => {
+          res.json(rows);
+        }
+      );
+  });
