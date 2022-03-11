@@ -1,48 +1,93 @@
 import { useParams } from "react-router-dom";
 import React, { useState, useEffect } from "react";
 import axios from "axios";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faTag } from "@fortawesome/free-solid-svg-icons";
 import { Header } from "../header/Header";
 import "./Article.css";
 
-export default  function Article () {
-    const [data, setData] = useState(undefined);
-    const [tags, setTags] = useState([]);
-  
-    let params = useParams()
+export default function Article() {
+  const [data, setData] = useState(undefined);
+  const [tags, setTags] = useState([]);
 
-    useEffect(() => {
-        getArticle();
-        //getTags();
-      }, []);
+  let params = useParams();
 
+  useEffect(() => {
+    getArticle();
+    //getTags();
+  }, []);
 
-      
   async function getArticle() {
-    const data = (await axios.get("http://localhost:8000/article/"+params.id)).data;
+    const data = (await axios.get("http://localhost:8000/article/" + params.id))
+      .data;
     setData(data);
-    const data2 = (await axios.get("http://localhost:8000/articletag/"+params.id)).data;
+    const data2 = (
+      await axios.get("http://localhost:8000/articletag/" + params.id)
+    ).data;
     setTags(data2);
-
-
   }
 
-if(data== undefined)
- return <p>Loading</p>
-
- if(data.length == 0 )
-  return <p>Unknown article</p>
-  let d= data[0]
-
+  function displayThumbnail(url) {
     return (
-        <>
-        <Header/>
-        <h1 className="articleTitle">{d.title}</h1>
-        <ul className="tagsName">
-        {tags.map((t)  => <>{<li>{t.name}</li>}</>)}
-        </ul>
-        
-        <p className="container" dangerouslySetInnerHTML={{ __html: d.content }}></p>
-        
-        </>
-  )
+      <img className="w-100" src={"http://localhost:8000/thumbnail/" + url} />
+    );
+  }
+
+  function displayMedia(type, url) {
+    let fileType = type.split("/")[0];
+    if (fileType === "image") {
+      return (
+        <img className="w-100" src={"http://localhost:8000/media/" + url} />
+      );
+    } else if (fileType === "video") {
+      return (
+        <video controls className="w-100">
+          <source
+            src={"http://localhost:8000/media/" + url}
+            type={type}
+          ></source>
+        </video>
+      );
+    } else if (fileType === "audio") {
+      return (
+        <div className="m-4">
+          <audio controls autoPlay className="w-100">
+            <source src={"http://localhost:8000/media/" + url} type={type} />
+          </audio>
+        </div>
+      );
+    }
+  }
+
+  if (data == undefined) return <p>Loading</p>;
+
+  if (data.length == 0) return <p>Unknown article</p>;
+  let d = data[0];
+
+  return (
+    <>
+      <Header />
+      <h1 className="articleTitle">{d.title}</h1>
+      <ul className="tagsName mt-4">
+        {tags.map((t) => (
+          <>
+            {
+              <li className="badge badge-pill badge-secondary">
+                <FontAwesomeIcon icon={faTag} className="fa-tag mr-2" />
+                <span>{t.name}</span>
+              </li>
+            }
+          </>
+        ))}
+      </ul>
+
+      {displayThumbnail(d.thumbnailURL)}
+
+      <p
+        className="container mt-4 mb-3"
+        dangerouslySetInnerHTML={{ __html: d.content }}
+      ></p>
+      {displayMedia(d.mediaType, d.mediaURL)}
+    </>
+  );
 }
