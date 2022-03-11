@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import axios from "axios";
 import { Link } from "react-router-dom";
 import { useParams } from "react-router-dom";
+import { Header } from "../header/Header";
 
 export default function AddTagToArticle() {
   const [allTags, setAllTags] = useState([]);
@@ -48,7 +49,7 @@ export default function AddTagToArticle() {
   };
 
   return (
-    <div className="card shadow m-3">
+    <><Header /><div className="card shadow m-3">
       <h1 className="card-header text-center">
         {article.length ? article[0].title : null}
       </h1>
@@ -95,6 +96,6 @@ export default function AddTagToArticle() {
           </button>
         </Link>
       </form>
-    </div>
+    </div></>
   );
 }

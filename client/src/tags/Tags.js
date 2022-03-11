@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
+import { Header } from "../header/Header";
 
 export default function Tags() {
   const [allTags, setAllTags] = useState([]);
@@ -22,15 +23,14 @@ export default function Tags() {
   };
 
   return (
-    <div className="card shadow m-3">
+    <><Header /><div className="card shadow m-3">
       <h1 className="card-header text-center">Manage Tags</h1>
       <div className="input-group p-3">
         <input
           type="text"
           className="form-control"
           placeholder="Enter tag name..."
-          id="newTag"
-        />
+          id="newTag" />
         <button
           className="btn btn-outline-secondary"
           type="button"
@@ -50,14 +50,14 @@ export default function Tags() {
         <tbody>
           {allTags
             ? allTags.map((tag) => (
-                <tr key={tag.id}>
-                  <td>{tag.id}</td>
-                  <td>{tag.name}</td>
-                </tr>
-              ))
+              <tr key={tag.id}>
+                <td>{tag.id}</td>
+                <td>{tag.name}</td>
+              </tr>
+            ))
             : null}
         </tbody>
       </table>
-    </div>
+    </div></>
   );
 }

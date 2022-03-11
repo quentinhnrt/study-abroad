@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 import { useParams } from "react-router-dom";
+import { Header } from "../header/Header";
 
 export default function EditArticle() {
   const [title, setTitle] = useState("");
@@ -134,7 +135,7 @@ export default function EditArticle() {
   }
 
   return (
-    <div className="card m-3 shadow">
+    <><Header /><div className="card m-3 shadow">
       <div className="card-header">
         <h1 className="text-center">Edit Article</h1>
       </div>
@@ -147,8 +148,7 @@ export default function EditArticle() {
             type="text"
             name="title"
             id="title"
-            value={title}
-          />
+            value={title} />
           {titleError}
         </div>
         <div className="form-group">
@@ -169,8 +169,7 @@ export default function EditArticle() {
             <input
               onChange={handleThumbnailChange}
               type="file"
-              className="custom-file-input"
-            />
+              className="custom-file-input" />
             <label className="custom-file-label">
               {thumbnail ? thumbnail.name : "Choose file"}
             </label>
@@ -185,8 +184,7 @@ export default function EditArticle() {
               onChange={handleMediaChange}
               type="file"
               name="media"
-              className="form-control-file"
-            />
+              className="form-control-file" />
             <label className="custom-file-label">
               {media ? media.name : "Choose file"}
             </label>
@@ -200,8 +198,7 @@ export default function EditArticle() {
             type="radio"
             name="leadStory"
             checked={leadStory === 1}
-            onClick={() => setLeadStory(1)}
-          />
+            onClick={() => setLeadStory(1)} />
           <span className="form-check-label ml-1">Yes</span>
         </div>
 
@@ -210,8 +207,7 @@ export default function EditArticle() {
             type="radio"
             name="leadStory"
             checked={leadStory === 0}
-            onClick={() => setLeadStory(0)}
-          />
+            onClick={() => setLeadStory(0)} />
           <span className="form-check-label ml-1">No</span>
         </div>
 
@@ -223,6 +219,6 @@ export default function EditArticle() {
           Send
         </button>
       </form>
-    </div>
+    </div></>
   );
 }
