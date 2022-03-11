@@ -22,8 +22,9 @@ export default function Tags() {
   };
 
   return (
-    <div>
-      <div className="input-group">
+    <div className="card shadow m-3">
+      <h1 className="card-header text-center">Manage Tags</h1>
+      <div className="input-group p-3">
         <input
           type="text"
           className="form-control"
