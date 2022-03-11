@@ -27,7 +27,7 @@ export const Header = () => {
         <>
             <div className={"header "}>
                 <div className="container">
-                    <img src="/logo.png" alt="logo" className="logo" />
+                    <Link to={'/'} className="logo"><img src="/logo.png" alt="logo" className="logo" /></Link>
                     <FontAwesomeIcon icon={faBars} className="fa-bars" onClick={showMenu} />
                 </div>
             </div>

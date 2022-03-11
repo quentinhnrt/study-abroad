@@ -58,6 +58,8 @@ function App() {
 
         <Route path="*" element={<p>Page Not Found</p>} />
       </Routes>
+
+      <footer className="footer"></footer>
     </>
   );
 }

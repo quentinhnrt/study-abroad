@@ -63,17 +63,43 @@ export default function Home() {
                 </nav>
 
             </div>
-            <div>
-                {data ? (data.map((x) => (
-                    <div>
-                        {displayThumbnail(x.thumbnailURL)}
-                        <h1>{x.title}</h1>
-                        <p dangerouslySetInnerHTML={{ __html: x.content }}></p>
+            <div className="articleList">
+                <h1>Lead Articles</h1>
+                {data.length ? (
+                    data.map((x) => (
+                        <article key={x.id} className={'container'}>
+                            <div className="article">
+                                <div className="media article-thumbnail">
+                                    {displayThumbnail(x.thumbnailURL)}
+                                </div>
+                                <div className="article-info">
+                                    <Link to={`/article/${x.id}`}>
+                                        <h1 className="Article_title">{x.title}</h1>
+                                    </Link>
 
-                    </div>
-                ))
+                                    <div className="buttons">
+                                        <Link to={`/addarticletag/${x.id}`}>
+                                            <button>Add Tag</button>
+                                        </Link>
+
+                                        <Link to={`/articles/edit/${x.id}`}>
+                                            <button>Modify</button>
+                                        </Link>
+
+                                        <Link to={`/articles/delete/${x.id}`}>
+                                            <button>Delete</button>
+                                        </Link>
+                                    </div>
+                                </div>
+
+                            </div>
+                            {/* <div className="article-img">
+            <div className="media">{displayMedia(x.mediaType, x.mediaURL)}</div>
+            </div> */}
+                        </article>
+                    ))
                 ) : (
-                    <h1>No articles</h1>
+                    <p>no articles</p>
                 )}
             </div>
         </>

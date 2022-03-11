@@ -71,8 +71,9 @@ export default function Articles() {
       <div className="searchbar">
         <input id="search" type="search" placeholder="Search for an article" onKeyUp={(e) => search(e)} />
         <select onChange={(e) => filter(e)}>
+          <option>All</option>
           {tags.length ? (tags.map((x) => (
-            <option value={x.name}>{x.name}</option>
+            <option value={x.name}key={x.id}>{x.name}</option>
           ))) : null}
         </select>
       </div>
