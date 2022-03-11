@@ -1,17 +1,20 @@
 import React, { useState } from 'react'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faBars, faTimes } from '@fortawesome/free-solid-svg-icons';
-import { Route, Link, Routes } from "react-router-dom";
+import { Route, Link, Routes, Navigate, useNavigate } from "react-router-dom";
 import Login, { ProtectedRoute, ProtectedLink, NotProtectedLink } from "../Login";
 import { useCookies, withCookies } from 'react-cookie';
 
 export const Header = () => {
     const [show, setShow] = useState(false);
     const [cookies, setCookie, removeCookie] = useCookies(['login']);
-
+    const [admin, setAdmin, removeAdmin] = useCookies(['admin'])
+    let navigate = useNavigate()
     function disconnect(e) {
         e.preventDefault()
         removeCookie('login');
+        removeAdmin('admin');
+        navigate('/');
     }
 
     function showMenu() {
