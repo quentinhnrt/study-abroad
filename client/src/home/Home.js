@@ -1,23 +1,21 @@
-
-import './Home.css';
-import React, { useEffect, useState } from 'react';
-import axios from 'axios';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faBars, faTimes } from '@fortawesome/free-solid-svg-icons';
-import { Route, Link, Routes, useNavigate } from "react-router-dom";
-import Login, { ProtectedRoute, ProtectedLink, NotProtectedLink } from "../Login";
-import { useCookies, withCookies } from 'react-cookie';
-
-
+import "./Home.css";
+import React, { useEffect, useState } from "react";
+import axios from "axios";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faBars, faTimes } from "@fortawesome/free-solid-svg-icons";
+import { Route, Link, Routes } from "react-router-dom";
+import Login, {
+  ProtectedRoute,
+  ProtectedLink,
+  NotProtectedLink,
+} from "../Login";
+import { useCookies, withCookies } from "react-cookie";
 
 export default function Home() {
-    const [data, setData] = useState([])
-    const [show, setShow] = useState(false);
-    const [cookies, setCookie, removeCookie] = useCookies(['login']);
-    const [admin, setAdmin, removeAdmin] = useCookies(['admin'])
-    const [path, setPath] = useState('');
-    let navigate = useNavigate();
-    let adminValue = parseInt(admin.admin); 
+  const [data, setData] = useState([]);
+  const [show, setShow] = useState(false);
+  const [cookies, setCookie, removeCookie] = useCookies(["login"]);
+  const [path, setPath] = useState("");
 
   function showMenu() {
     setShow(true);
@@ -90,24 +88,24 @@ export default function Home() {
                     <h1 className="Article_title">{x.title}</h1>
                   </Link>
 
-{adminValue === 1 ? (
-                                        <div className="buttons">
-                                            <Link to={`/addarticletag/${x.id}`}>
-                                                <button>Add Tag</button>
-                                            </Link>
+                  <div className="buttons">
+                    <Link to={`/addarticletag/${x.id}`}>
+                      <button>Add Tag</button>
+                    </Link>
 
-                                            <Link to={`/articles/edit/${x.id}`}>
-                                                <button>Modify</button>
-                                            </Link>
+                    <Link to={`/articles/edit/${x.id}`}>
+                      <button>Modify</button>
+                    </Link>
 
-                                            <Link to={`/articles/delete/${x.id}`}>
-                                                <button>Delete</button>
-                                            </Link>
-                                        </div>
-                                    ) : null} 
+                    <Link to={`/articles/delete/${x.id}`}>
+                      <button>Delete</button>
+                    </Link>
+                  </div>
                 </div>
               </div>
-
+              {/* <div className="article-img">
+            <div className="media">{displayMedia(x.mediaType, x.mediaURL)}</div>
+            </div> */}
             </article>
           ))
         ) : (

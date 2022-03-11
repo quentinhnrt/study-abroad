@@ -1,41 +1,9 @@
-.tagsName {
+.tagsName{
     list-style: none;
     display: flex;
     gap: 1rem;
 }
 
-.articleTitle {
+.articleTitle{
     color: #70afc1;
-}
-
-.guest {
-    background-color: rgba(255, 255, 255, 0.1);
-    backdrop-filter: blur(0.3rem);
-    position: absolute;
-    top: 37vh;
-    height: -webkit-fill-available;
-    width: 100%;
-}
-
-.guestMessage {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    background-color: white;
-    aspect-ratio: 1;
-    width: 100%;
-    justify-content: center;
-    position: absolute;
-    top: 0;
-    left: 50%;
-    transform: translateX(-50%);
-}
-
-.guestMessage h1 {
-    font-size: 2rem;
-}
-
-.btnLogin {
-    font-size: 2rem !important;
-    margin-top: 50%;
 }
