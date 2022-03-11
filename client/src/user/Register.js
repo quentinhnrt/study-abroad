@@ -34,15 +34,30 @@ export default function Register() {
 
 
     return (
-        <><Header /><div className="register">
-            <h1>Register</h1>
-            <form>
-                <input type="text" id="name" />
-                <input type="password" id="password" />
-                <input type="password" id="confirmPassword" />
-                <button onClick={(e) => registerUser(e)}>Register</button>
-                <h3>{error}</h3>
-            </form>
-        </div></>
+        <><Header /><div className="container2">
+            <div className="card">
+                <article className="card-body">
+                    <a href="/user/login" className="float-right btn btn-outline-primary">Sign in</a>
+                    <h4 className="card-title mb-4 mt-1">Sign up</h4>
+                    {/* <div className="register"> */}
+                    <h1>Register</h1>
+                    <form>
+                        <div className="form-group">
+                            <label>Username</label>
+                            <input type="text" id="name" />
+                        </div>
+                        <div className="form-group">
+                            <label>Password</label>
+                            <input type="password" id="password" />
+                        </div>
+                        <div className="form-group">
+                            <label>Confirm password</label>
+                            <input type="password" id="confirmPassword" />
+                        </div>
+                        <button onClick={(e) => registerUser(e)}>Register</button>
+                        <h3>{error}</h3>
+                    </form>
+                </article>
+            </div></div></>
     )
 }
