@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import axios from "axios";
 import "./Articles.css";
 import { Link } from "react-router-dom";
+import { Header } from "../header/Header";
 
 export default function Articles() {
   const [data, setData] = useState([]);
@@ -20,7 +21,6 @@ export default function Articles() {
   async function getArticles() {
     const data = (await axios.get("http://localhost:8000/articles")).data;
     setData(data);
-    console.log(data);
   }
 
   useEffect(() => {
@@ -53,17 +53,18 @@ export default function Articles() {
 
   return (
     <>
- 
+
+ <Header/>
  <h1>Articles !!</h1>
       {console.log(data)}
       <ul>
       <li>
-      <div class="searchbar">
+      <div className="searchbar">
       <input id="search" type="search"  placeholder="Search for an article" onKeyUp={(e) => search(e)} />
       </div></li>
-      <li class="dropdown">
-    <a href="javascript:void(0)" class="dropbtn">Tags</a>
-    <div class="dropdown-content">
+      <li className="dropdown">
+    <a href="javascript:void(0)" className="dropbtn">Tags</a>
+    <div className="dropdown-content">
       <a href="#">tag 1</a>
       <a href="#">tag 2</a>
       <a href="#">tag 3</a>
@@ -76,6 +77,7 @@ export default function Articles() {
             <div className="article">
             <div className="article-info">
             <h1 className="Article_title">{x.title}</h1>
+
             <section className="article-content" dangerouslySetInnerHTML={{ __html: x.content }}></section>
             </div>
             <div className="media article-thumbnail">{displayThumbnail(x.thumbnailURL)}</div>
@@ -85,6 +87,8 @@ export default function Articles() {
             </div> */}
             <button>Add Tag</button>
             <button>Modify</button>
+
+
             <Link to={`/articles/delete/${x.id}`}>
               <button>Delete</button>
             </Link>
