@@ -2,23 +2,33 @@ import React from 'react';
 import axios from "axios";
 import { Link, Navigate, useNavigate } from 'react-router-dom';
 import { useCookies, withCookies } from 'react-cookie';
-
+import "./user/Login.css";
+import { Header } from './header/Header';
 function FormLogin(props) {
     return (
-        <form onSubmit={props.onSignin}>
-            <div>
-                <label>Username:</label>
-                <input type="text" id="username" autoComplete="off" ref={props.usernameRef} />
+        <><Header /><div className="container2 ">
+            <div className="card">
+                <article className="card-body">
+                    <a href="/user/register" className="float-right btn btn-outline-primary">Sign up</a>
+                    <h4 className="card-title mb-4 mt-1">Sign in</h4>
+                    <form onSubmit={props.onSignin}>
+                        <div className="form-group">
+                            <label>Username</label>
+                            <input type="text" id="username" autoComplete="off" ref={props.usernameRef} />
+                        </div>
+                        <div className="form-group">
+                            <label>Password</label>
+                            <input type="password" name="password" autoComplete="off" ref={props.passwordRef} />
+                        </div>
+                        <div className="form-group">
+                            <div className="checkbox">
+                                <label> <input type="checkbox" /> Save password</label>
+                            </div></div>
+                        <button type="submit" name="login">Login</button>
+                    </form>
+                </article>
             </div>
-            <div>
-                <label>Password:</label>
-                <input type="password" name="password" autoComplete="off" ref={props.passwordRef} />
-            </div>
-            <div>
-                <button type="submit" name="login">Login</button>
-            </div>
-            
-        </form>
+        </div></>
     );
 }
 
@@ -37,7 +47,7 @@ function Login() {
             const p = (await axios.post('http://localhost:8000/signup', user));
             if (p.status === 200) {
                 user.token = p.data.token;
-           
+
                 setCookie('login', user, '/');
             }
         } catch (err) {
