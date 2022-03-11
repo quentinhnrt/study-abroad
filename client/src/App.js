@@ -4,6 +4,11 @@ import Articles from "./articles/Articles";
 import "./App.css";
 import NewArticle from "./articles/NewArticle";
 import DeleteArticle from "./articles/DeleteArticle";
+
+import EditArticle from "./articles/EditArticle";
+import Tags from "./tags/Tags";
+import AddTagToArticle from "./tags/AddTagToArticle";
+
 import Register from "./user/Register";
 import Login, { ProtectedRoute, ProtectedLink, NotProtectedLink } from "./Login";
 import { useCookies, withCookies } from 'react-cookie';
@@ -15,6 +20,7 @@ function App() {
 
   return (
     <>
+
       <Routes>
         <Route exact={true} path="/" element={<Home />} />
         <Route exact={true} path="/articles" element={<Articles />} />
@@ -23,9 +29,31 @@ function App() {
           path="/articles/delete/:id"
           element={<DeleteArticle />}
         />
-        <Route exact={true} path="/articles/new" element={<ProtectedRoute><NewArticle /></ProtectedRoute>} />
+
+        <Route
+          exact={true}
+          path="/articles/edit/:id"
+          element={<EditArticle />}
+        />
+        <Route exact={true} path="/tags" element={<Tags />} />
+        <Route
+          exact={true}
+          path="/addarticletag/:id"
+          element={<AddTagToArticle />}
+        />
+
+        <Route
+          exact={true}
+          path="/articles/new"
+          element={
+            <ProtectedRoute>
+              <NewArticle />
+            </ProtectedRoute>
+          }
+        />
         <Route exact={true} path="/user/register" element={<Register />} />
         <Route exact={true} path="/user/login" element={<Login />} />
+
         <Route path="*" element={() => <p>Page Not Found</p>} />
       </Routes>
     </>
