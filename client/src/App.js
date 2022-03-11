@@ -22,10 +22,9 @@ function App() {
   
 
   function disconnect(e) {
-    e.preventDefault()
-    removeCookie('login');
+    e.preventDefault();
+    removeCookie("login");
   }
-
 
   return (
     <>
@@ -46,19 +45,22 @@ function App() {
           <NotProtectedLink to="/user/login">Login</NotProtectedLink>
           <ProtectedLink to="/" onClick={(e) => disconnect(e)}>Logout</ProtectedLink>
         </nav>
-
       </div>
-
-          <div class="dropdown">
-              <button class="dropdown" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                    Menu
-              </button>
-              <div class="dropdown-content">
-                  <a href="/articles" > Articles </a>
-                  <a href="/articles/new" > New Article </a>
-              </div>
-          </div>
-
+      <div className="dropdown">
+        <button
+          className="dropdown"
+          type="button"
+          data-toggle="dropdown"
+          aria-haspopup="true"
+          aria-expanded="false"
+        >
+          Menu
+        </button>
+        <div className="dropdown-content">
+          <a href="/articles"> Articles </a>
+          <a href="/articles/new"> New Article </a>
+        </div>
+      </div>
 
       <Routes>
         <Route exact={true} path="/" element={<Home />} />
@@ -81,7 +83,15 @@ function App() {
           element={<AddTagToArticle />}
         />
 
-        <Route exact={true} path="/articles/new" element={<ProtectedRoute><NewArticle /></ProtectedRoute>} />
+        <Route
+          exact={true}
+          path="/articles/new"
+          element={
+            <ProtectedRoute>
+              <NewArticle />
+            </ProtectedRoute>
+          }
+        />
         <Route exact={true} path="/user/register" element={<Register />} />
         <Route exact={true} path="/user/login" element={<Login />} />
 
