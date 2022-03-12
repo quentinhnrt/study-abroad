@@ -1,20 +1,29 @@
-import { useParams } from "react-router-dom";
+import { useParams, Link } from "react-router-dom";
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faTag } from "@fortawesome/free-solid-svg-icons";
 import { Header } from "../header/Header";
 import "./Article.css";
+import { useCookies, withCookies } from 'react-cookie';
+
+
+
 
 export default function Article() {
   const [data, setData] = useState(undefined);
   const [tags, setTags] = useState([]);
-
-  let params = useParams();
+  const [cookies, setCookie, removeCookie] = useCookies(['login']);
+  let guest = true;
+  if (cookies.login) {
+    guest = false
+  } else {
+    guest = true
+  }
+  let params = useParams()
 
   useEffect(() => {
     getArticle();
-    //getTags();
   }, []);
 
   async function getArticle() {
@@ -59,35 +68,31 @@ export default function Article() {
     }
   }
 
-  if (data == undefined) return <p>Loading</p>;
+  if (data === undefined)
+    return <p>Loading</p>
 
-  if (data.length == 0) return <p>Unknown article</p>;
-  let d = data[0];
+  if (data.length === 0)
+    return <p>Unknown article</p>
+  let d = data[0]
 
   return (
     <>
       <Header />
       <h1 className="articleTitle">{d.title}</h1>
-      <ul className="tagsName mt-4">
-        {tags.map((t) => (
-          <>
-            {
-              <li className="badge badge-pill badge-secondary">
-                <FontAwesomeIcon icon={faTag} className="fa-tag mr-2" />
-                <span>{t.name}</span>
-              </li>
-            }
-          </>
-        ))}
+      <ul className="tagsName">
+        {tags.map((t) => <>{<li>{t.name}</li>}</>)}
       </ul>
 
-      {displayThumbnail(d.thumbnailURL)}
-
-      <p
-        className="container mt-4 mb-3"
-        dangerouslySetInnerHTML={{ __html: d.content }}
-      ></p>
-      {displayMedia(d.mediaType, d.mediaURL)}
+      <p className="container" dangerouslySetInnerHTML={{ __html: d.content }}></p>
+      {guest ? (
+        <div className="guest">
+          <div className="guestMessage">
+            <h1> You need to be logged to see this content</h1>
+            <Link to={'/user/login'}><button className="btnLogin">Login</button></Link>
+          </div>
+        </div>
+      ) : null}
     </>
   );
 }
+

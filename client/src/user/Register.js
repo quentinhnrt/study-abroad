@@ -4,6 +4,7 @@ import { Navigate } from 'react-router'
 import { Header } from "../header/Header";
 export default function Register() {
     const [error, setError] = useState('');
+    const[navigate, setNavigate] = useState(false)
     async function registerUser(e) {
         e.preventDefault();
         let name = document.getElementById('name').value;
@@ -14,11 +15,10 @@ export default function Register() {
             .then(res => {
                 if (res.data.length === 0) {
                     if (password === confirmPassword) {
-
-                        axios.post(`http://localhost:8000/user/register/`, { name: name, password: password, admin: 0 }).then(() => {
+                        if(axios.post(`http://localhost:8000/user/register/`, { name: name, password: password, admin: 0 })){
                             setError("Account created")
-                            return <Navigate to="/" />;
-                        });
+                            setNavigate(true)
+                        }
                     } else {
                         setError("Password are not the same")
                     }
@@ -35,6 +35,7 @@ export default function Register() {
 
     return (
         <><Header /><div className="container2">
+            {navigate ? (<Navigate to={"/user/login"}/>) : null}
             <div className="card">
                 <article className="card-body">
                     <a href="/user/login" className="float-right btn btn-outline-primary">Sign in</a>
