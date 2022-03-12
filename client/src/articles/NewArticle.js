@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import axios from "axios";
 import { Header } from "../header/Header";
+import { Navigate, useParams, Link } from "react-router-dom";
 
 export default function NewArticle(props) {
   axios.defaults.headers.common['Authorization'] = 'Bearer ' + props.token;
@@ -10,6 +11,7 @@ export default function NewArticle(props) {
   const [content, setContent] = useState("");
   const [media, setMedia] = useState([]);
   const [leadStory, setLeadStory] = useState(1);
+  const [navigate, setNavigate] = useState(false);
 
   let postArticle = (e) => {
     e.preventDefault();
@@ -25,6 +27,8 @@ export default function NewArticle(props) {
     axios.post("http://localhost:8000/articles/new", formData, {
       headers: { "Content-Type": "multipart/form-data" },
     });
+
+    setNavigate(true);
   };
 
   const handleTitleChange = (e) => {
@@ -87,6 +91,7 @@ export default function NewArticle(props) {
 
     <>
     <Header />
+    {navigate ? <Navigate to="/articles" /> : null}
     <div className="card m-3 shadow">
       <div className="card-header">
         <h1 className="text-center">New Article</h1>
@@ -135,7 +140,7 @@ export default function NewArticle(props) {
               onChange={handleMediaChange}
               type="file"
               name="media"
-              className="form-control-file"
+              className="custom-file-input"
             />
             <label className="custom-file-label">
               {media ? media.name : "Choose file"}
