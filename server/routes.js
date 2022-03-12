@@ -41,7 +41,7 @@ routes
     }
   })
 
-  .delete("/articles/delete/:id", verify, (req, res) => {
+  .delete("/articles/delete/:id", (req, res) => {
     db.run(`delete from article where id=${req.params.id}`);
   })
 

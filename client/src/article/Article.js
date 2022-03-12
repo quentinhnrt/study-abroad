@@ -79,11 +79,28 @@ export default function Article() {
     <>
       <Header />
       <h1 className="articleTitle">{d.title}</h1>
-      <ul className="tagsName">
-        {tags.map((t) => <>{<li>{t.name}</li>}</>)}
+      <ul className="tagsName mt-4">
+        {tags.map((t) => (
+          <>
+            {
+              <li className="badge badge-pill badge-secondary">
+                <FontAwesomeIcon icon={faTag} className="fa-tag mr-2" />
+                <span>{t.name}</span>
+              </li>
+            }
+          </>
+        ))}
       </ul>
 
-      <p className="container" dangerouslySetInnerHTML={{ __html: d.content }}></p>
+      {displayThumbnail(d.thumbnailURL)}
+
+      <p
+        className="container mt-4 mb-3"
+        dangerouslySetInnerHTML={{ __html: d.content }}
+      ></p>
+      {displayMedia(d.mediaType, d.mediaURL)}
+
+
       {guest ? (
         <div className="guest">
           <div className="guestMessage">
@@ -92,6 +109,7 @@ export default function Article() {
           </div>
         </div>
       ) : null}
+
     </>
   );
 }

@@ -12,7 +12,7 @@
     background-color: rgba(255, 255, 255, 0.1);
     backdrop-filter: blur(0.3rem);
     position: absolute;
-    top: 37vh;
+    top: 65%;
     height: -webkit-fill-available;
     width: 100%;
 }
