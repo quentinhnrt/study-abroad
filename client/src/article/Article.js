@@ -98,7 +98,7 @@ export default function Article() {
         className="container mt-4 mb-3"
         dangerouslySetInnerHTML={{ __html: d.content }}
       ></p>
-      {displayMedia(d.mediaType, d.mediaURL)}
+      {d.mediaType ? displayMedia(d.mediaType, d.mediaURL) : null}
 
 
       {guest ? (

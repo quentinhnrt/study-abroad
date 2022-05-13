@@ -5,6 +5,7 @@ import { Link } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faSadTear } from "@fortawesome/free-solid-svg-icons";
 import { Header } from "../header/Header";
+import { Admin } from "../Login";
 
 export default function Articles() {
   const [data, setData] = useState([]);
@@ -61,10 +62,10 @@ export default function Articles() {
           <option>All</option>
           {tags.length
             ? tags.map((x) => (
-                <option value={x.name} key={x.id}>
-                  {x.name}
-                </option>
-              ))
+              <option value={x.name} key={x.id}>
+                {x.name}
+              </option>
+            ))
             : null}
         </select>
       </div>
@@ -80,20 +81,21 @@ export default function Articles() {
                   <Link to={`/article/${x.id}`}>
                     <h1 className="Article_title">{x.title}</h1>
                   </Link>
+                  <Admin>
+                    <div className="buttons">
+                      <Link to={`/addarticletag/${x.id}`}>
+                        <button>Add Tag</button>
+                      </Link>
 
-                  <div className="buttons">
-                    <Link to={`/addarticletag/${x.id}`}>
-                      <button>Add Tag</button>
-                    </Link>
+                      <Link to={`/articles/edit/${x.id}`}>
+                        <button>Modify</button>
+                      </Link>
 
-                    <Link to={`/articles/edit/${x.id}`}>
-                      <button>Modify</button>
-                    </Link>
-
-                    <Link to={`/articles/delete/${x.id}`}>
-                      <button>Delete</button>
-                    </Link>
-                  </div>
+                      <Link to={`/articles/delete/${x.id}`}>
+                        <button>Delete</button>
+                      </Link>
+                    </div>
+                  </Admin>
                 </div>
               </div>
               {/* <div className="article-img">

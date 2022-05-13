@@ -20,10 +20,10 @@ export default function EditArticle() {
     ).data[0];
     setTitle(data.title);
     setContent(data.content);
-    setThumbnail(data.thumbnailURL);
-    setMedia(data.mediaURL);
+    setThumbnail(data?.thumbnailURL);
+    setMedia(data?.mediaURL);
     setLeadStory(data.leadStory);
-    setMediaType(data.mediaType);
+    setMediaType(data?.mediaType);
   }
 
   useEffect(() => {
@@ -198,10 +198,10 @@ export default function EditArticle() {
                 className="custom-file-input"
               />
               <label className="custom-file-label">
-                {media ? media.name : "Choose file"}
+                {media ? media?.name : "Choose file"}
               </label>
             </div>
-            {mediaType.length ? displayMedia(mediaType, media) : null}
+            {mediaType?.length ? displayMedia(mediaType, media) : null}
           </div>
 
           <label className="form-check-label mr-3">Lead story?</label>
