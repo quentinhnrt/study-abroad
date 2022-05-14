@@ -19,23 +19,6 @@ import { faBars, faTimes } from '@fortawesome/free-solid-svg-icons';
 
 function App() {
 
-  useEffect(() => {
-    const MySwal = Swal.mixin({
-      customClass: {
-        confirmButton: "btn btn-success mr-2",
-        cancelButton: "btn btn-danger ml-2",
-      },
-      buttonsStyling: false,
-    });
-
-    MySwal.fire({
-      text: "Cette application a été codé en priorité pour les smartphones, il est fortement recommandé de l'utiliser sur un smartphone ou avec la vue mobile du navigateur",
-      icon: "warning",
-      confirmButtonColor: "#5cb85c",
-      confirmButtonText: "J'ai compris :)",
-    });
-  }, []);
-
   return (
     <>
 
